@@ -1,0 +1,8 @@
+/Users/swetshah/eclipse-workspace/UserManagement/src/main/java/com/user/dto/LoginRequest.java
+/Users/swetshah/eclipse-workspace/UserManagement/src/main/java/com/user/dto/SignUpRequest.java
+/Users/swetshah/eclipse-workspace/UserManagement/src/main/java/com/user/dto/User.java
+/Users/swetshah/eclipse-workspace/UserManagement/src/main/java/com/user/UserManagementBootstrapper.java
+/Users/swetshah/eclipse-workspace/UserManagement/src/main/java/com/user/controller/UserController.java
+/Users/swetshah/eclipse-workspace/UserManagement/src/main/java/com/user/service/UserService.java
+/Users/swetshah/eclipse-workspace/UserManagement/src/main/java/com/user/security/Security.java
+/Users/swetshah/eclipse-workspace/UserManagement/src/main/java/com/user/repository/UserRepository.java

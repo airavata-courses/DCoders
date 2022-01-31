@@ -1,0 +1,7 @@
+com/user/UserManagementBootstrapper.class
+com/user/dto/LoginRequest.class
+com/user/controller/UserController.class
+com/user/service/UserService.class
+com/user/repository/UserRepository.class
+com/user/dto/User.class
+com/user/dto/SignUpRequest.class
