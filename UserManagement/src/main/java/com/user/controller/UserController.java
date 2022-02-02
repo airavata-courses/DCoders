@@ -14,7 +14,6 @@ import com.user.dto.User;
 import com.user.service.UserService;
 
 @RestController
-//@RequestMapping("/user")
 public class UserController {
 
 	@Autowired
@@ -37,11 +36,4 @@ public class UserController {
 		}
 		return ResponseEntity.ok("Welcome to the family");
 	}
-
-//	@RequestMapping("/logout")
-//	public ResponseEntity<Boolean> logout() {
-//
-//		return ResponseEntity.ok(true);
-//	}
-
 }
