@@ -28,11 +28,11 @@ public class UserService {
 		user.setPassword(encoder.encode(signUpRequest.getPassword()));
 		user.setUserName(signUpRequest.getUserName());
 
-		return userRepository.registerUser(user);
+		return userRepository.save(user);
 	}
 
 	public boolean isUserNameExists(String userName) {
-		if (userRepository.findUserByUserName(userName) != null) {
+		if (userRepository.findByUserName(userName) != null) {
 			return true;
 		}
 		return false;
@@ -41,15 +41,12 @@ public class UserService {
 	public User authenticateUser(LoginRequest loginRequest) {
 		String userName = loginRequest.getUserName();
 
-		User user = userRepository.findUserByUserName(userName);
-
-		System.out.println(user.getPassword());
-		System.out.println(encoder.matches(loginRequest.getPassword(), user.getPassword()));
-
+		User user = userRepository.findByUserName(userName);
 		if (user == null || !encoder.matches(loginRequest.getPassword(), user.getPassword())) {
 			return null;
 		}
 
 		return user;
+
 	}
 }

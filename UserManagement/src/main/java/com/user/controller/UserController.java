@@ -14,6 +14,7 @@ import com.user.dto.User;
 import com.user.service.UserService;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
 	@Autowired
@@ -32,7 +33,7 @@ public class UserController {
 	public ResponseEntity<String> register(@RequestBody SignUpRequest signUpRequest) {
 		if (userService.registerUser(signUpRequest) == null) {
 			return ResponseEntity.badRequest()
-					.body("Your username is very famous! Somebody already took it. Please try another one");
+					.body("Your username is very prominent! Somebody already took it. Please try another one");
 		}
 		return ResponseEntity.ok("Welcome to the family");
 	}
