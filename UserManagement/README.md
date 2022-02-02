@@ -1,4 +1,4 @@
-**UserManagementService project to handle user login and registration**
+**UserManagementService project to handle user login and registration and saving details that users have queried related to radar in Mongodb**
 
 
 
@@ -10,7 +10,7 @@ A) **Follow the below commands to run the application:**
   
 B) **Following are the API's**
   
-   1. **/login** (POST request)
+   1. **/user/login** (POST request)
 
    Request Body:
    {
@@ -18,10 +18,25 @@ B) **Following are the API's**
       "password":"john"
    }
 
-   2. **/register**
+   2. **/user/register** (POST request)
 
-   Request Body: (POST request)
+   Request Body:
+  
    {
       "userName":"John",
       "password":"john"
    }
+
+  3. **/query/save** (POST request)
+  
+  Request Body:
+  
+  {
+    "userName": "John",
+    "queryDetails": {
+        "date": "27031001",
+        "month": "December",
+        "time": "22432454",
+        "radarInfo": "NSFR"
+    }
+  }
