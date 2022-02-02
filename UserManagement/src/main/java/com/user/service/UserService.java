@@ -23,11 +23,11 @@ public class UserService {
 		if (isUserNameExists(userName)) {
 			return null;
 		}
-		
+
 		User user = new User();
 		user.setPassword(encoder.encode(signUpRequest.getPassword()));
 		user.setUserName(signUpRequest.getUserName());
-		
+
 		return userRepository.registerUser(user);
 	}
 
@@ -42,25 +42,14 @@ public class UserService {
 		String userName = loginRequest.getUserName();
 
 		User user = userRepository.findUserByUserName(userName);
-		
+
 		System.out.println(user.getPassword());
 		System.out.println(encoder.matches(loginRequest.getPassword(), user.getPassword()));
-		
+
 		if (user == null || !encoder.matches(loginRequest.getPassword(), user.getPassword())) {
 			return null;
 		}
 
 		return user;
 	}
-
-//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//
-//		if (userRepository.findUserByUserName(username) == null) {
-//			return null;
-//		}
-//		User user = new User();
-//		user.setUserName(username);
-//		return user;
-//	}
-
 }
