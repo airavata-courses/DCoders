@@ -1,4 +1,4 @@
-**UserManagementService project to handle user login and registration and saving details that users have queried related to radar in Mongodb**
+**UserManagementService project to handle user login and registration and saving/fetching details that users have queried related to radar in Mongodb**
 
 
 **NOTE** : Kindly configure the Mongo server on local and make sure it is up and running before running the Spring application.
@@ -48,3 +48,5 @@ B) **Following are the API's**
         "radarInfo": "NSFR"
     }
   }
+  
+  4. **/query/get/{userName}** (GET request)
