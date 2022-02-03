@@ -1,5 +1,7 @@
 package com.storage.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,10 @@ public class QueryStorageService {
 
 	public UserQuery saveUserQueryDetails(UserQuery userQuery) {
 		return queryStorageRepository.save(userQuery);
+	}
+
+	public List<UserQuery> getUserQuery(String userName) {
+		return queryStorageRepository.findByUserName(userName);
 	}
 
 }
