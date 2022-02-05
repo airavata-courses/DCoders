@@ -29,7 +29,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |-
-	ls -la
+        ls -la
         python -m pip install --upgrade pip
         python -m pip install poetry==1.1.12 flake8
         poetry install
@@ -44,4 +44,14 @@ jobs:
       run: |-
         cd datasource
         poetry run pytest
+
+    - name: build and push docker image
+      uses: mr-smithers-excellent/docker-build-push@v5
+      with:
+        image: vinayakasgadag/decoders-datasource
+        tags: v1, latest
+        registry: docker.io
+        dockerfile: datasource/Dockerfile
+        username: vinayakasgadag
+        password: 9b770f15-c13f-41cd-a4df-6a1a175141a6
 
