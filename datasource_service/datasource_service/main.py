@@ -2,12 +2,14 @@
 
 import os
 
-from fastapi import FastAPI, Response
+from fastapi import FastAPI, HTTPException
 import nexradaws
 import uvicorn
 import pyart
 from matplotlib import pyplot as plt
 import base64
+
+from datasource_service.response_model import ResponseModel
 
 desc = """ ### Datasource api helps you fetch the radar object from a specified radar station \n
            API uses a Py-ART library, an open source library developed by
@@ -18,19 +20,18 @@ app = FastAPI(title="Datasource-api",
               description=desc)
 
 
-@app.get("/api/v1/{year}/{month}/{day}/{radar}")
+@app.get("/api/v1/{year}/{month}/{day}/{radar}", response_model=ResponseModel, response_model_exclude_unset=True)
 def nexrad_data(year: int, month: int, day: int, radar: str):
     """ GET api to fetch data from nexradaws """
 
-    radar_object, scans = download_radar_object(year, month, day, radar)
+    json_object = {}
     encoded_image = ""
-    # radar_object = pyart.io.read_nexrad_archive(file_path)
-    # plot_radar = pyart.graph.RadarDisplay(radar_object)
     try:
+        radar_object, scans = download_radar_object(year, month, day, radar)
         radar_file = scans[-1].filename.rstrip('.gz')
         for i, scan in enumerate(radar_object.iter_success(), start=1):
-            radar = scan.open_pyart()
-            display_plot = pyart.graph.RadarDisplay(radar)
+            radar_scan = scan.open_pyart()
+            display_plot = pyart.graph.RadarDisplay(radar_scan)
             # Set backend to non-interactive when using the matplotlib to plot inside a thread which is not called
             # from main() method so that your server does not try to create and then destroy. (
             # https://github.com/matplotlib/matplotlib/issues/14304/)
@@ -43,10 +44,17 @@ def nexrad_data(year: int, month: int, day: int, radar: str):
             image = os.path.join(cur_dir, save_plot)
             with open(image, 'rb') as output:
                 encoded_image = base64.b64encode(output.read())
-        return Response(content=encoded_image, media_type="application/json")
+            json_object = {
+                "year": year,
+                "month": month,
+                "day": day,
+                "radar": radar,
+                "encoded_image": encoded_image
+            }
+        return json_object
     except Exception as ex:
-        print("Error while fetching the data of plotting the graph")
-        print(ex)
+        print(f"Error while fetching the data or plotting the graph: {ex}")
+        raise HTTPException(status_code=404, detail="Radar station is not found")
     finally:
         dirs = os.listdir()
         cur_dir = os.getcwd()
@@ -72,4 +80,8 @@ def download_radar_object(year: int, month: int, day: int, radar: str):
 
 
 def start():
+    """ Start fastAPI using uvicorn """
     uvicorn.run("datasource_service.main:app", port=8000, host="0.0.0.0")
+
+# if __name__ == "__main__":
+#     uvicorn.run("datasource_service.main:app", reload=True)
