@@ -9,12 +9,18 @@ import pyart
 from matplotlib import pyplot as plt
 import base64
 
-app = FastAPI()
+desc = """ ### Datasource api helps you fetch the radar object from a specified radar station \n
+           API uses a Py-ART library, an open source library developed by
+           - JJ Helmus and SM Collis, JORS 2016, doi: 10.5334/jors.119     
+       """
+
+app = FastAPI(title="Datasource-api",
+              description=desc)
 
 
 @app.get("/api/v1/{year}/{month}/{day}/{radar}")
 def nexrad_data(year: int, month: int, day: int, radar: str):
-    """ GET datasource_api to fetch data from nexradaws """
+    """ GET api to fetch data from nexradaws """
 
     radar_object, scans = download_radar_object(year, month, day, radar)
     encoded_image = ""
@@ -55,6 +61,8 @@ def nexrad_data(year: int, month: int, day: int, radar: str):
 
 
 def download_radar_object(year: int, month: int, day: int, radar: str):
+    """ Downloading the radar object """
+
     # nexradaws connection object
     ncon = nexradaws.NexradAwsInterface()
     scans = ncon.get_avail_scans(year, month, day, radar)
@@ -64,4 +72,4 @@ def download_radar_object(year: int, month: int, day: int, radar: str):
 
 
 def start():
-    uvicorn.run("datasource_api.main:app")
+    uvicorn.run("datasource_service.main:app", port=8000, host="0.0.0.0")

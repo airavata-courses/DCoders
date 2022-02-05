@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "datasource_api"
+name = "datasource_service"
 version = "0.1.0"
 description = "data source api for naxradaws s3 objects"
 authors = ["vinayakgadag"]
 
 [tool.poetry.dependencies]
-python = "3.9"
+python = "3.9.10"
 fastapi = "^0.73.0"
 uvicorn = "^0.17.1"
 nexradaws = "^1.1"
@@ -18,10 +18,10 @@ pandas = "^1.4.0"
 requests = "^2.27.1"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.5"
+pytest = "^7.0.0"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core==1.1.12"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
