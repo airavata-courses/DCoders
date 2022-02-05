@@ -2,7 +2,7 @@
 - The service is written in python using FastApi
 - Fetches the radar objects from nexradaws cloud storage
 - Plots the graph for the requested radar station
-- Returns the encoded string
+- Returns the json as response with queried information and encoded image
 
 ### The project is built using poetry packaging manager
 - Docs: [poetry](https://python-poetry.org/docs/)
