@@ -82,6 +82,3 @@ def download_radar_object(year: int, month: int, day: int, radar: str):
 def start():
     """ Start fastAPI using uvicorn """
     uvicorn.run("datasource_service.main:app", port=8000, host="0.0.0.0")
-
-# if __name__ == "__main__":
-#     uvicorn.run("datasource_service.main:app", reload=True)
