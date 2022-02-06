@@ -1,0 +1,21 @@
+{
+  "name": "rest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "node-fetch": "^3.2.0",
+    "redirect": "^0.2.0",
+    "request": "^2.88.2"
+  }
+}
