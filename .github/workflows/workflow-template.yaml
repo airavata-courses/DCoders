@@ -1,16 +1,16 @@
-name: datasource
+name: "{{APP}}"
 
 on:
   push:
     branches: [ main ]
     paths:
-      - "datasource/**"
-      - ".github/workflows/datasource.yaml"
+      - "{{APP}}/**"
+      - ".github/workflows/{{APP}}.yaml"
   pull_request:
     branches: [ main ]
     paths:
-      - "datasource/**"
-      - ".github/workflows/datasource.yaml"
+      - "{{APP}}/**"
+      - ".github/workflows/{{APP}}.yaml"
 
 jobs:
   build:
@@ -28,7 +28,7 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
-      run: |-
+      run: |
         ls -la
         python -m pip install --upgrade pip
         python -m pip install poetry==1.1.12 flake8
@@ -54,4 +54,3 @@ jobs:
         dockerfile: datasource/Dockerfile
         username: vinayakasgadag
         password: 9b770f15-c13f-41cd-a4df-6a1a175141a6
-
