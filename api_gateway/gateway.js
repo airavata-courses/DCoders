@@ -87,13 +87,13 @@ app.get('/getquery/:userName', async(req, res) => {
 
 app.get('/get/:year/:month/:day/:radar', async(req, res) => {
     
-    let year_new = req.params.userName;
+    let year_new = req.params.year;
     let month_new = req.params.month;
     let day_new = req.params.day;
     let radar_new = req.params.radar;
 
     const options={
-        uri : `http://localhost:8080/get/v1/${year_new}/${month_new}/${day_new}/${radar_new}`,
+        uri : `http://localhost:8000/api/v1/${year_new}/${month_new}/${day_new}/${radar_new}`,
         method: "GET",
         json: true,
     }
