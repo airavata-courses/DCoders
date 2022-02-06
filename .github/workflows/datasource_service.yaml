@@ -51,6 +51,6 @@ jobs:
         image: vinayakasgadag/decoders-datasource
         tags: v1, latest
         registry: docker.io
-        dockerfile: datasource/Dockerfile
+        dockerfile: datasource_service/Dockerfile
         username: vinayakasgadag
         password: 9b770f15-c13f-41cd-a4df-6a1a175141a6
