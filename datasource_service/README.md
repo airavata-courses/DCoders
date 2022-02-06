@@ -19,4 +19,7 @@
 
   - Pre-requisites: *docker*
 
-    ``` docker run {docker-image} ```
+    ``` docker run -it -p 8000:8000 vinayakasgadag/decoders-datasource:latest ```
+  - Access the service using http://127.0.0.1/docs
+  - The above URL will redirect to swagger-ui with the api information
+  - pass YEAR, MONTH, DAY and RADAR information to fetch the weather information from
