@@ -46,12 +46,13 @@ jobs:
         poetry run pytest
 
     - name: build and push docker image
+      run: cd datasource_service
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
         image: vinayakasgadag/decoders-datasource
         tags: v1, latest
         registry: docker.io
-        directory: datasource_service
-        # dockerfile: Dockerfile
+        # directory: datasource_service
+        dockerfile: Dockerfile
         username: vinayakasgadag
         password: 9b770f15-c13f-41cd-a4df-6a1a175141a6
