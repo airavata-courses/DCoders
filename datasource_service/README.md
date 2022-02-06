@@ -1,3 +1,5 @@
+[![datasource_service](https://github.com/airavata-courses/DCoders/actions/workflows/datasource_service.yaml/badge.svg)](https://github.com/airavata-courses/DCoders/actions/workflows/datasource_service.yaml)
+
 ## Data-source api service
 - The service is written in python using FastApi
 - Fetches the radar objects from nexradaws cloud storage
