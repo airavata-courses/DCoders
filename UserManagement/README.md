@@ -1,3 +1,5 @@
+[![UserManagement](https://github.com/airavata-courses/DCoders/actions/workflows/UserManagement.yaml/badge.svg)](https://github.com/airavata-courses/DCoders/actions/workflows/UserManagement.yaml)
+
 **UserManagementService project to handle user login and registration and saving/fetching details that users have queried related to radar in Mongodb**
 
 
