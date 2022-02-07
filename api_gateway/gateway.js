@@ -14,7 +14,6 @@ app.use(
 )
 
 app.post('/login', async (req, res) => {
-    //console.log(req.body)
 
     const options = {
         uri: "http://localhost:8080/user/login",
@@ -27,7 +26,12 @@ app.post('/login', async (req, res) => {
     }
     request(options, (error, response, body) => {
         console.log(response.statusCode)
-        res.send(body)
+        if(response.statusCode==200){
+            res.send(true)
+        }
+        else{
+            res.send(false)
+        }
         res.end()
     })
 })
@@ -43,16 +47,19 @@ app.post('/register', async (req, res) => {
         }
     }
     request(options, (error, response, body) => {
-        console.log("Mere niche")
         console.log(response.statusCode)
-        console.log("Mere upar")
-        res.send(body)
+        if(response.statusCode==200){
+            res.send(true)
+        }
+        else{
+            res.send(false)
+        }
         res.end()
     })
 })
 
-app.post('/save/query/:userName', async (req, res) => {
-
+app.post('/save/query', async (req, res) => {
+    
     const options = {
         uri: "http://localhost:8080/query/save",
         method: "POST",
@@ -61,60 +68,54 @@ app.post('/save/query/:userName', async (req, res) => {
         body: {
             userName: req.params.userName,
             queryDetails: {
-                date: req.body.queryDetails.date,
+                year: req.body.queryDetails.year,
                 month: req.body.queryDetails.month,
-                time: req.body.queryDetails.time,
-                radarInfo: req.body.queryDetails.radarInfo
+                day: req.body.queryDetails.day,
+                radarInfo: req.body.queryDetails.radarInfo,
             }
         }
     }
     request(options, (error, response, body) => {
-        console.log(response.statusCode)
-        res.send(body)
+        if(response.statusCode==200){
+            res.send(true)
+        }
+        else{
+            res.send(false)
+        }
         res.end()
     })
 })
 
-app.get('/get/query/:userName', async (req, res) => {
-    console.log(req.params.userName)
-    let id_new = req.params.userName;
+app.get('/get/query', async (req, res) => {
+
+    let userName = req.body.userName
+
     const options = {
-        uri: `http://localhost:8080/query/get/${id_new}`,
+        uri: `http://localhost:8080/query/get/${userName}`,
         method: "GET",
         json: true,
     }
     request(options, (error, response, body) => {
-        console.log(JSON.stringify(response.body))
+        console.log(response.body)
         res.send(response.body)
         res.end()
     })
 })
 
-<<<<<<< HEAD
-app.get('/get/:year/:month/:day/:radar', async (req, res) => {
+app.get('/plot', async (req, res) => {
 
-    let year_new = req.params.userName;
-=======
-app.get('/get/:year/:month/:day/:radar', async(req, res) => {
-    
-    let year_new = req.params.year;
->>>>>>> b4ed45c97c2edc3314592613f55d7f9c58f1b0bb
-    let month_new = req.params.month;
-    let day_new = req.params.day;
-    let radar_new = req.params.radar;
+    let year_new = req.body.year;
+    let month_new = req.body.month;
+    let day_new = req.body.day;
+    let radar_new = req.body.radar;
 
-<<<<<<< HEAD
     const options = {
-        uri: `http://localhost:8080/get/v1/${year_new}/${month_new}/${day_new}/${radar_new}`,
-=======
-    const options={
-        uri : `http://localhost:8000/api/v1/${year_new}/${month_new}/${day_new}/${radar_new}`,
->>>>>>> b4ed45c97c2edc3314592613f55d7f9c58f1b0bb
+        uri: `http://localhost:8080/api/v1/${year_new}/${month_new}/${day_new}/${radar_new}`,
         method: "GET",
         json: true,
     }
+    console.log(options)
     request(options, (error, response, body) => {
-        console.log(JSON.stringify(response.body))
         res.send(response.body)
         res.end()
     })
@@ -123,7 +124,6 @@ app.get('/get/:year/:month/:day/:radar', async(req, res) => {
 var server = app.listen(8081, function () {
     var host = server.address().address
     var port = server.address().port
-    console.log("REST API demo app listening at http://%s:%s", host, port)
 })
 
 module.exports = router
