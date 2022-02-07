@@ -1,0 +1,21 @@
+version: "3.7"
+networks:
+  mongo_nw:
+    driver: bridge
+services:
+  um_service:
+    build: .
+    networks:
+      - mongo_nw
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo_db
+  mongo_db:
+    image: "mongo:4.4.3"
+    restart: always
+    ports:
+      - "27017:27017"
+    networks:
+      - mongo_nw
