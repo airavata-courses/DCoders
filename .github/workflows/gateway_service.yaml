@@ -31,3 +31,14 @@ jobs:
         cd api_gateway
         npm ci
         npm install
+
+    - name: build and push docker image
+      uses: mr-smithers-excellent/docker-build-push@v5
+      with:
+        image: vinayakasgadag/dcoders-api-gateway
+        tags: latest
+        registry: docker.io
+        directory: api_gateway
+        dockerfile: api_gateway/Dockerfile
+        username: vinayakasgadag
+        password: 9b770f15-c13f-41cd-a4df-6a1a175141a6
