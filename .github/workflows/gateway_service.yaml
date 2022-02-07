@@ -1,0 +1,32 @@
+name: "gateway_service"
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "gateway_service/**"
+      - ".github/workflows/gateway_service.yaml"
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "gateway_service/**"
+      - ".github/workflows/gateway_service.yaml"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: v17
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: use node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.python-version }}
+        cache: 'npm'
+    - run: |
+        npm ci
+        npm install
