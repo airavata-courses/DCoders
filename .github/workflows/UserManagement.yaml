@@ -1,0 +1,38 @@
+name: "UserManagement"
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "UserManagement/**"
+      - ".github/workflows/UserManagement.yaml"
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "UserManagement/**"
+      - ".github/workflows/UserManagement.yaml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: build user-management api
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+
+      - name: build and push docker image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: vinayakasgadag/dcoders-user-management
+          tags: latest
+          registry: docker.io
+          directory: UserManagement
+          dockerfile: UserManagement/Dockerfile
+          username: vinayakasgadag
+          password: 9b770f15-c13f-41cd-a4df-6a1a175141a6
