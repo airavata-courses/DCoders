@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class QueryDetails {
 
-	private String date;
+	private String year;
 	private String month;
-	private String time;
+	private String day;
 	private String radarInfo;
 
 }
