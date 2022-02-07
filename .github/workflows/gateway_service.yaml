@@ -27,7 +27,8 @@ jobs:
       with:
         node-version: ${{ matrix.python-version }}
         cache: 'npm'
-    - run: |
+    - name: Install npm packages
+      run: |-
         cd api_gateway
         npm ci
         npm install
