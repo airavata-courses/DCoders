@@ -52,3 +52,8 @@ B) **Following are the API's**
   }
   
   4. **/query/get/{userName}** (GET request)
+
+#### Run application using docker
+- cd into the api directory and run the below commands
+- ```docker-compose build```
+- ```docker-compose up```
