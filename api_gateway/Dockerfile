@@ -1,5 +1,7 @@
 FROM node:17
 
+MAINTAINER "Chaitanya Shekhar Deshpande"
+
 RUN mkdir /app
 
 COPY . /app
