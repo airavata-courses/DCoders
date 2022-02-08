@@ -11,4 +11,6 @@ RUN echo "Installing npm packages" && \
 	npm install && \
 	echo "Installation completed!"
 
+EXPOSE 8081
+
 CMD ["node", "gateway.js"]
