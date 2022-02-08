@@ -24,7 +24,14 @@ class PostQuery extends Component {
 	submitHandler = e => {
 		e.preventDefault()
 		axios
-			.post('http://localhost:8081/save/query', this.state)
+			.post('http://localhost:8081/save/query', { 
+				userName: this.state.userName,
+				queryDetails: { 
+					day: this.state.day, 
+					year: this.state.year, 
+					month: this.state.month, 
+					radarInfo: this.state.radarInfo }
+				})
 			.then(response => {
 				console.log(response)
 				
@@ -40,12 +47,14 @@ class PostQuery extends Component {
 	}
 
 	submitHandlerPlot = e => {
+		console.log('PLOT***')
 		e.preventDefault()
 		axios
 			.get('http://localhost:8081/plot', this.state)
 			.then(response => {
+				console.log(response)
 				this.setState({
-					encoded_image:"data:image/png;base64, " + response.data.encoded_image
+					encoded_image:"data:image/png;base64, " + response.data.body.encoded_image
 				})
 			})
 			.catch(error => {
@@ -55,7 +64,7 @@ class PostQuery extends Component {
 
 	render() {
 		const { userName, year, month, day, radarInfo, encoded_image} = this.state
-		//console.log(this.state)
+		console.log(this.state)
 		let error = '';
 
 		if (this.state.message){
@@ -76,6 +85,19 @@ class PostQuery extends Component {
 						
 						<Form onSubmit={this.submitHandler}>
 							<div>
+								<Form.Group controlId="u">
+									<Form.Label>Enter Username:</Form.Label>
+									<Form.Control
+										type="text" 
+										name="userName"
+										value={userName}
+										placeholder="Enter User Name" 
+										onChange={this.changeHandler}
+									/>
+								</Form.Group>
+							</div>
+
+							<div>
 								<Form.Group controlId="y">
 									<Form.Label>Enter Year:</Form.Label>
 									<Form.Control
@@ -87,6 +109,7 @@ class PostQuery extends Component {
 									/>
 								</Form.Group>
 							</div>
+
 							<div>
 								<Form.Group controlId="m">
 									<Form.Label>Enter Month:</Form.Label>
