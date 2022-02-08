@@ -20,7 +20,7 @@ class GetQuery extends Component {
 	submitHandler = e => {
 		e.preventDefault()
 		axios
-			.get('http://localhost:8081/get/query', this.state)
+			.get('http://localhost:8081/get/query', {params: this.state})
 			.then(response => {
 				this.setState({
 					list:response.data

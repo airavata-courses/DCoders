@@ -49,13 +49,18 @@ class Login extends Component {
 				console.log(response.data)
 				
                 if(response.data===true){
-					console.log(window.location.assign("http://localhost:3000"))
+                	this.setState({
+                		message: "Registration successful, please login to continue."
+                	})
+                	setTimeout(function(){
+					console.log(window.location.assign("http://localhost:3000"));},2000);
+
                 }
 				else{
 					this.setState({
 						message: "Registration Failed. Redirecting to login page. "
 					})
-					setTimeout(function() {
+					setTimeout(function(){
 					console.log(window.location.assign("http://localhost:3000"));}, 2000);
 			}
 			})
@@ -80,7 +85,9 @@ class Login extends Component {
 
 		return (
 			<Container>
+
 				<h1 className="shadow-sm text-success mt-5 p-3 text-center rounded">Login Page</h1>
+				<h5>Please login to continue, if youjust registered, you will be redirected to login page.</h5>
 				<Row className="mt-7">
 				<Col lg={5} md={6} sm={12} className="p-5 m-auto shadow-sm rounded-lg">
 					<div>
@@ -112,7 +119,7 @@ class Login extends Component {
 							
 							<Row className="mt-11">
 								<Col lg={5} md={6} sm={12} className="p-5 m-auto shadow-sm rounded-lg">
-									<Button variant="success btn-block" type="submit">Login</Button>
+									<Button variant="success btn-block" onclick="IsEmpty()" type="submit">Login</Button>
 								</Col>
 							</Row>
 						</Form>
@@ -126,6 +133,7 @@ class Login extends Component {
 							</Col>
 						</Form></Row>
 					</div>
+
 
 			{error}
 			</Col>
