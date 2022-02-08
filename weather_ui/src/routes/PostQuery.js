@@ -37,7 +37,7 @@ class PostQuery extends Component {
 				
                 if(response.data===true){   
 						this.setState({
-							message: "Query Saved Successfully. Please enter details to fetch the plot."
+							message: "Query Saved Successfully. Click Get Plot fetch the plot."
 						})
                 }
 			})
@@ -49,13 +49,26 @@ class PostQuery extends Component {
 	submitHandlerPlot = e => {
 		console.log('PLOT***')
 		e.preventDefault()
+		this.setState({
+			encoded_image: ''
+		});
+		
 		axios
-			.get('http://localhost:8081/plot', this.state)
+			.get('http://localhost:8081/plot', { params: 
+				{ year: this.state.year, 
+					month: this.state.month, 
+					day: this.state.day, 
+					radarInfo: this.state.radarInfo
+				}
+			})
 			.then(response => {
 				console.log(response)
-				this.setState({
-					encoded_image:"data:image/png;base64, " + response.data.body.encoded_image
-				})
+				const {encoded_image} = response.data.body;
+				if(encoded_image) {
+					this.setState({
+						encoded_image:"data:image/png;base64, " + encoded_image
+					})
+				}
 			})
 			.catch(error => {
 				console.log(error)
@@ -82,7 +95,7 @@ class PostQuery extends Component {
 				<Row className="mt-7">
 				<Col lg={5} md={6} sm={12} className="p-5 m-auto shadow-sm rounded-lg">
 					<div>
-						
+						<h6>Please wait for sometime after clicking Get Plot button</h6>
 						<Form onSubmit={this.submitHandler}>
 							<div>
 								<Form.Group controlId="u">
@@ -163,7 +176,7 @@ class PostQuery extends Component {
 							<Col lg={5} md={6} sm={12} className="p-5 m-auto shadow-sm rounded-lg">
 								<Button variant="success btn-block" type="submit">Get Plot</Button>
 								<div>
-									<img src={this.state.encoded_image}></img>
+									<center><img src={this.state.encoded_image}></img></center>
 								</div>
 							</Col>
 						</Form></Row>
