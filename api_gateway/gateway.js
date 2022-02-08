@@ -110,7 +110,7 @@ app.get('/plot', async (req, res) => {
     let radar_new = req.body.radar;
 
     const options = {
-        uri: `http://localhost:8080/api/v1/${year_new}/${month_new}/${day_new}/${radar_new}`,
+        uri: `http://localhost:8000/api/v1/${year_new}/${month_new}/${day_new}/${radar_new}`,
         method: "GET",
         json: true,
     }
