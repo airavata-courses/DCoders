@@ -1,0 +1,43 @@
+name: "weather_ui"
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "weather_ui/**"
+      - ".github/workflows/weather_ui.yaml"
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "weather_ui/**"
+      - ".github/workflows/weather_ui.yaml"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [17]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: use node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install npm packages
+      run: |-
+        cd weather_ui
+        npm ci
+
+    - name: build and push docker image
+      uses: mr-smithers-excellent/docker-build-push@v5
+      with:
+        image: vinayakasgadag/dcoders-weather-ui
+        tags: latest
+        registry: docker.io
+        directory: weather_ui
+        dockerfile: weather_ui/Dockerfile
+        username: vinayakasgadag
+        password: 9b770f15-c13f-41cd-a4df-6a1a175141a6
