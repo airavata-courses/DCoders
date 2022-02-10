@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-slim
+FROM maven:3.8.4-jdk-11
 
 MAINTAINER "Swet Shah"
 
@@ -7,6 +7,8 @@ RUN mkdir /app
 COPY . /app
 
 WORKDIR /app
+
+RUN mvn package
 
 EXPOSE 8080
 
