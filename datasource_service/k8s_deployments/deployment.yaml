@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: datasource-deployment
-  namespace: milestone2
   labels:
     app: datasource
 spec:
