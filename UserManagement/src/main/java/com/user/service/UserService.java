@@ -61,10 +61,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// Implement authentication logic
-
 		User user = userRepository.findByUserName(username);
-
 		return new MyUserDetails(user);
 	}
 

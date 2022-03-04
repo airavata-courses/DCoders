@@ -2,6 +2,8 @@ package com.user.controller;
 
 import java.util.List;
 
+import org.hibernate.validator.internal.util.logging.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,11 +21,15 @@ import com.user.dto.User;
 import com.user.repository.InvalidateJWTRepository;
 import com.user.service.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/user")
 @CrossOrigin(origins = "**")
+@Slf4j
 public class UserController {
 
+	Logger logger = org.slf4j.LoggerFactory.getLogger(UserController.class);
 	@Autowired
 	private UserService userService;
 
@@ -38,6 +44,8 @@ public class UserController {
 
 	@PostMapping("/register")
 	public ResponseEntity<String> register(@RequestBody SignUpRequest signUpRequest) {
+
+		logger.info("Request received for registration from: " + signUpRequest.getUserName());
 		if (userService.registerUser(signUpRequest) == null) {
 			return ResponseEntity.badRequest()
 					.body("Your username is very prominent! Somebody already took it. Please try another one");
@@ -47,6 +55,7 @@ public class UserController {
 
 	@GetMapping("/logout")
 	public ResponseEntity<String> logout() {
+		logger.info("Request received for logout");
 		return ResponseEntity.ok().body("Logout Successful");
 	}
 

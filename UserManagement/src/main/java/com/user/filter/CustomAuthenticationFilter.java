@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,10 +21,16 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.user.controller.UserController;
 import com.user.dto.User;
 import com.user.helper.MyUserDetails;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
+	Logger logger = org.slf4j.LoggerFactory.getLogger(CustomAuthenticationFilter.class);
 
 	private final String APPLICATION_JSON = "application/json";
 	private AuthenticationManager authenticationManager;
@@ -67,7 +74,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
 		String userName = user.getUserName();
 		String password = user.getPassword();
-
+		logger.info("Authenticating user: "+userName);
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userName, password);
 		return authenticationManager.authenticate(token);
 
@@ -77,12 +84,17 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
 
-		// This might not work, revisit it
 		MyUserDetails user = (MyUserDetails) authResult.getPrincipal();
+		
+		logger.info("Authentication successful for user: "+user.getUsername());	
+		logger.info("Generating token for user: "+user.getUsername());	
+		
 		Algorithm algo = Algorithm.HMAC256("secret".getBytes());
 		String accessToken = JWT.create().withSubject(user.getUsername())
 				.withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000)).sign(algo);
 		response.setContentType(APPLICATION_JSON);
+		
+		logger.info("User: "+user.getUsername()+"& Token: "+accessToken);	
 		objectMapper.writeValue(response.getOutputStream(), accessToken);
 	}
 
