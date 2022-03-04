@@ -5,6 +5,7 @@
 - Fetches the radar objects from nexradaws cloud storage
 - Plots the graph for the requested radar station
 - Returns the json as response with queried information and encoded image
+- [ENHANCEMENT] caching added to speed up the download of nexrad object
 
 ### The project is built using poetry packaging manager
 - Docs: [poetry](https://python-poetry.org/docs/)
