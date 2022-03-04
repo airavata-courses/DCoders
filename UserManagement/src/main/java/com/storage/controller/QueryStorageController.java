@@ -1,6 +1,5 @@
 package com.storage.controller;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.storage.dto.UserQuery;
 import com.storage.service.QueryStorageService;
+import com.user.service.UserService;
 
 @RestController
 @RequestMapping("/query")
@@ -44,9 +44,7 @@ public class QueryStorageController {
 		if (!CollectionUtils.isEmpty(userQueries)) {
 			return ResponseEntity.ok().body(userQueries);
 		}
-
 		List<UserQuery> emptyList = Collections.emptyList();
-		return ResponseEntity.badRequest().body(emptyList);
+		return ResponseEntity.ok().body(emptyList);
 	}
-
 }
