@@ -49,7 +49,7 @@ jobs:
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
         image: vinayakasgadag/decoders-datasource
-        tags: v1, latest
+        tags: milestone1
         registry: docker.io
         dockerfile: datasource/Dockerfile
         username: vinayakasgadag

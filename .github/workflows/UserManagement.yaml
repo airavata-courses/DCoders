@@ -31,7 +31,7 @@ jobs:
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
           image: vinayakasgadag/dcoders-user-management
-          tags: latest
+          tags: milestone1
           registry: docker.io
           directory: UserManagement
           dockerfile: UserManagement/Dockerfile
