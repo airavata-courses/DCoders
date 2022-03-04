@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datasource-deployment
+  namespace: milestone2
+  labels:
+    app: datasource
+spec:
+  selector:
+    matchLabels:
+      app: datasource
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: datasource
+    spec:
+      containers:
+        - name: datasource
+          image: vinayakasgadag/decoders-datasource
+          resources:
+            limits:
+              cpu: 2
+              memory: "2Gi"
+            requests:
+              cpu: 1
+              memory: "1Gi"
+          ports:
+            - containerPort: 8000
