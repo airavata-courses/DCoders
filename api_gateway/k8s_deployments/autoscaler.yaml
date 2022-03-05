@@ -1,14 +1,14 @@
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: datasource-deployment
+  name: api-gateway-deployment
   labels:
-    app: datasource
+    app: api-gateway
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: datasource-deployment
-  minReplicas: 2
-  maxReplicas: 7
+    name: api-gateway-deployment
+  minReplicas: 3
+  maxReplicas: 5
   targetCPUUtilizationPercentage: 60

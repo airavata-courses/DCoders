@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: um-deployment
+  labels:
+    app: um
+spec:
+  selector:
+    matchLabels:
+      app: um
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: um
+    spec:
+      containers:
+        - name: um
+          image: vinayakasgadag/dcoders-user-management:milestone2
+          env:
+          - name: SPRING_DATA_MONGODB_HOST
+            value: mongodb
+          - name: MONGODB_ROOT_PASSWORD
+            value: 3f2HlkZ9Qj
+          resources:
+            limits:
+              cpu: 2
+              memory: "2Gi"
+            requests:
+              cpu: 1
+              memory: "1Gi"
+          ports:
+            - containerPort: 8080
