@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: datasource
-  replicas: 1
+  replicas: 2
   template:
     metadata:
       labels:
@@ -16,13 +16,13 @@ spec:
     spec:
       containers:
         - name: datasource
-          image: vinayakasgadag/decoders-datasource
+          image: vinayakasgadag/decoders-datasource:milestone2
           resources:
             limits:
               cpu: 2
-              memory: "1Gi"
+              memory: "15Gi"
             requests:
               cpu: 1
-              memory: "512Mi"
+              memory: "6Gi"
           ports:
             - containerPort: 8000
