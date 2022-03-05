@@ -16,7 +16,7 @@ app.use(
 app.post('/login', async (req, res) => {
 
     const options = {
-        uri: "http://um-service:8080/user/login",
+        uri: "http://um-svc:8080/user/login",
         method: "POST",
         json: true,
         body: {
@@ -38,7 +38,7 @@ app.post('/login', async (req, res) => {
 
 app.post('/register', async (req, res) => {
     const options = {
-        uri: "http://um-service:8080/user/register",
+        uri: "http://um-svc:8080/user/register",
         method: "POST",
         json: true,
         body: {
@@ -61,7 +61,7 @@ app.post('/register', async (req, res) => {
 app.post('/save/query', async (req, res) => {
 
     const options = {
-        uri: "http://um-service:8080/query/save",
+        uri: "http://um-svc:8080/query/save",
         method: "POST",
         json: true,
 
@@ -93,7 +93,7 @@ app.get('/get/query', async (req, res) => {
 
 
     const options = {
-        uri: `http://um-service:8080/query/get/${userName}`,
+        uri: `http://um-svc:8080/query/get/${userName}`,
         method: "GET",
         json: true,
     }
