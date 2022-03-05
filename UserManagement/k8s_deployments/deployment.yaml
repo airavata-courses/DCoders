@@ -20,6 +20,12 @@ spec:
           env:
           - name: SPRING_DATA_MONGODB_HOST
             value: mongodb
+          - name: SPRING_DATA_MONGODB_USERNAME
+            value: root
+          - name: SPRING_DATA_MONGODB_PASSWORD
+            value: 3f2HlkZ9Qj
+          - name: SPRING_DATA_MONGODB_AUTHENTICATION-DATABASE
+            value: admin
           - name: MONGODB_ROOT_PASSWORD
             value: 3f2HlkZ9Qj
           resources:
