@@ -1,7 +1,7 @@
-apiVersion: autoscaling/v2
+apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: datasource-svc-scaler
+  name: datasource-deployment
   labels:
     app: datasource
 spec:
@@ -9,19 +9,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: datasource-deployment
-  minReplicas: 1
-  maxReplicas: 3
-  metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: 50
-    - type: Pods
-      pods:
-        metric:
-          name: packets-per-second
-        target:
-          type: AverageValue
-          averageValue: 1k
+  minReplicas: 2
+  maxReplicas: 7
+  targetCPUUtilizationPercentage: 60
+
