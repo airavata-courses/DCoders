@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: um
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -23,11 +23,11 @@ spec:
           - name: SPRING_DATA_MONGODB_USERNAME
             value: root
           - name: SPRING_DATA_MONGODB_PASSWORD
-            value: 3f2HlkZ9Qj
+            value: PgSCEPgcaw
           - name: SPRING_DATA_MONGODB_AUTHENTICATION-DATABASE
             value: admin
           - name: MONGODB_ROOT_PASSWORD
-            value: 3f2HlkZ9Qj
+            value: PgSCEPgcaw
           resources:
             limits:
               cpu: 2
