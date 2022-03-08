@@ -83,9 +83,6 @@ app.post('/save/query', async (req, res) => {
             }
         }
     }
-
-    console.log("Call is here")
-    console.log(req.body)
     request(options, (error, response, body) => {
         if (response.statusCode == 200) {
             res.send(true)
@@ -216,20 +213,15 @@ app.get('/plot', async (req, res) => {
 
     const promise = auth()
     console.log(promise)
-
     promise.then((data) => {
         console.log(data)
         if (data) {
-            console.log("Inside Call to Vinu")
             const options = {
                 uri: `http://datasource-svc:8000/api/v1/${year_new}/${month_new}/${day_new}/${radar_new}`,
-                //uri: `http://127.0.0.1:8080/user/dummy/27031001/December/22432454/NSFR`,
                 method: "GET",
                 json: true,
             }
-            console.log("Call mid")
             request(options, (error, response, body) => {
-                console.log(response)
                 res.send(response)
                 res.end()
             })
