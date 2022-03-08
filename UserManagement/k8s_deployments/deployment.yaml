@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: um-deployment
+  labels:
+    app: um
+spec:
+  selector:
+    matchLabels:
+      app: um
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: um
+    spec:
+      containers:
+        - name: um
+          image: vinayakasgadag/dcoders-user-management:milestone2
+          env:
+          - name: SPRING_DATA_MONGODB_HOST
+            value: mongodb
+          - name: SPRING_DATA_MONGODB_USERNAME
+            value: root
+          - name: SPRING_DATA_MONGODB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: um-db-secret
+                key: SPRING_DATA_MONGODB_PASSWORD
+          - name: SPRING_DATA_MONGODB_AUTHENTICATION-DATABASE
+            value: admin
+          - name: MONGODB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: um-db-secret
+                key: MONGODB_ROOT_PASSWORD
+          resources:
+            limits:
+              cpu: 2
+              memory: "2Gi"
+            requests:
+              cpu: 1
+              memory: "1Gi"
+          ports:
+            - containerPort: 8080

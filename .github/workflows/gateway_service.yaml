@@ -36,7 +36,7 @@ jobs:
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
         image: vinayakasgadag/dcoders-api-gateway
-        tags: milestone1
+        tags: milestone2
         registry: docker.io
         directory: api_gateway
         dockerfile: api_gateway/Dockerfile

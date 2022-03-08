@@ -18,7 +18,7 @@ global.token = ""
 app.post('/login', async (req, res) => {
 
     const options = {
-        uri: "http://127.0.0.1:8080/user/login",
+        uri: "http://um-svc:8080/user/login",
         method: "POST",
         json: true,
         body: {
@@ -42,7 +42,7 @@ app.post('/login', async (req, res) => {
 
 app.post('/register', async (req, res) => {
     const options = {
-        uri: "http://127.0.0.1:8080/user/register",
+        uri: "http://um-svc:8080/user/register",
         method: "POST",
         json: true,
         body: {
@@ -66,7 +66,7 @@ app.post('/save/query', async (req, res) => {
 
 
     const options = {
-        uri: "http://127.0.0.1:8080/query/save",
+        uri: "http://um-svc:8080/query/save",
         method: "POST",
         json: true,
         headers: {
@@ -83,9 +83,6 @@ app.post('/save/query', async (req, res) => {
             }
         }
     }
-
-    console.log("Call is here")
-    console.log(req.body)
     request(options, (error, response, body) => {
         if (response.statusCode == 200) {
             res.send(true)
@@ -107,7 +104,7 @@ app.get('/get/query', async (req, res) => {
 
     const options = {
 
-        uri: `http://127.0.0.1:8080/query/get/${userName}`,
+        uri: `http://um-svc:8080/query/get/${userName}`,
         method: "GET",
         json: true,
         headers: {
@@ -132,7 +129,7 @@ app.get('/get/query', async (req, res) => {
 app.get('/logout', async (req, res) => {
 
     const options = {
-        uri: `http://127.0.0.1:8080/user/logout/`,
+        uri: `http://um-svc:8080/user/logout/`,
         method: "GET",
         json: true,
         headers: {
@@ -216,20 +213,15 @@ app.get('/plot', async (req, res) => {
 
     const promise = auth()
     console.log(promise)
-
     promise.then((data) => {
         console.log(data)
         if (data) {
-            console.log("Inside Call to Vinu")
             const options = {
-                uri: `http://127.0.0.1:8000/api/v1/${year_new}/${month_new}/${day_new}/${radar_new}`,
-                //uri: `http://127.0.0.1:8080/user/dummy/27031001/December/22432454/NSFR`,
+                uri: `http://datasource-svc:8000/api/v1/${year_new}/${month_new}/${day_new}/${radar_new}`,
                 method: "GET",
                 json: true,
             }
-            console.log("Call mid")
             request(options, (error, response, body) => {
-                console.log(response)
                 res.send(response)
                 res.end()
             })
@@ -241,7 +233,7 @@ app.get('/plot', async (req, res) => {
 function auth() {
 
     const options_auth = {
-        uri: 'http://127.0.0.1:8080/user/authentication',
+        uri: 'http://um-svc:8080/user/authentication',
         method: "GET",
         headers: {
             "Content-Type": "application/json",
