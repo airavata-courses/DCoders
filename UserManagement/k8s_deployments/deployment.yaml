@@ -23,11 +23,17 @@ spec:
           - name: SPRING_DATA_MONGODB_USERNAME
             value: root
           - name: SPRING_DATA_MONGODB_PASSWORD
-            value: PgSCEPgcaw
+            valueFrom:
+              secretKeyRef:
+                name: um-db-secret
+                key: SPRING_DATA_MONGODB_PASSWORD
           - name: SPRING_DATA_MONGODB_AUTHENTICATION-DATABASE
             value: admin
           - name: MONGODB_ROOT_PASSWORD
-            value: PgSCEPgcaw
+            valueFrom:
+              secretKeyRef:
+                name: um-db-secret
+                key: MONGODB_ROOT_PASSWORD
           resources:
             limits:
               cpu: 2
