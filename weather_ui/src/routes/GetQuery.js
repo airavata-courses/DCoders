@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import {Button, Col, Container, Form, Row} from "react-bootstrap";
-import {Link} from 'react-router-dom'
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Link } from 'react-router-dom'
 
 class GetQuery extends Component {
 	constructor(props) {
@@ -9,10 +9,10 @@ class GetQuery extends Component {
 
 		this.state = {
 			userName: '',
-			list:[]
+			list: []
 		}
 	}
-	
+
 	changeHandler = e => {
 		this.setState({ [e.target.name]: e.target.value })
 	}
@@ -20,10 +20,10 @@ class GetQuery extends Component {
 	submitHandler = e => {
 		e.preventDefault()
 		axios
-			.get('http://localhost:8081/get/query', {params: this.state})
+			.get('http://localhost:8081/get/query', { params: this.state })
 			.then(response => {
 				this.setState({
-					list:response.data
+					list: response.data
 				})
 			})
 			.catch(error => {
@@ -31,10 +31,33 @@ class GetQuery extends Component {
 			})
 	}
 
+	submitHandlerLogout = e => {
+		e.preventDefault()
+		axios
+			.get("http://localhost:8081/logout", this.state)
+			.then(response => {
+				console.log(response)
+
+				if (response.data === true) {
+					this.setState({
+						message: "Logging out now."
+					})
+					setTimeout(function () {
+						console.log(window.location.assign("http://localhost:3000"));
+					}, 1000);
+
+				}
+
+			})
+			.catch(error => {
+				console.log(error)
+			})
+	}
+
 	render() {
-		const { userName,list } = this.state		
-		let tb_data = list.map((item)=>{
-			return(
+		const { userName, list } = this.state
+		let tb_data = list.map((item) => {
+			return (
 				<tr key={item.queryDetails.radarInfo}>
 					<td>{item.queryDetails.year}</td>
 					<td>{item.queryDetails.month}</td>
@@ -48,54 +71,63 @@ class GetQuery extends Component {
 			<div>
 				<div>
 					<Container>
+						<div>
+							<Row className="mt-1">
+								<Form onSubmit={this.submitHandlerLogout}>
+									<Col lg={5} md={6} sm={12} className="p-5 m-auto shadow-sm rounded-lg">
+										<Button variant="success btn-block" type="submit">Logout</Button>
+									</Col>
+								</Form>
+							</Row>
+						</div>
 						<h1 className="shadow-sm text-success mt-5 p-3 text-center rounded">Get Query Details</h1>
 						<Row className="mt-7">
-						<Col lg={5} md={6} sm={12} className="p-5 m-auto shadow-sm rounded-lg">
-							<div>
-								<Form onSubmit={this.submitHandler}>
-									<div>
-										<Form.Group controlId="user">
-											<Form.Label>Enter Username to get your all previous query details:</Form.Label>
-											<Form.Control
-												type="text" 
-												name="userName"
-												value={userName}
-												placeholder="Enter Username" 
-												onChange={this.changeHandler}
-											/>
-										</Form.Group>
-									</div>
-									
-									<Row className="mt-11">
-										<Col lg={5} md={6} sm={12} className="p-5 m-auto shadow-sm rounded-lg">
-											<Button variant="success btn-block" type="submit">Get Query details for User.</Button>
-										</Col>
-									</Row>
-								</Form>
-							</div>
-							<div><Link to="/PostQuery">Click here to enter a new query.</Link></div>
-					</Col>
-					</Row>
-				</Container>
+							<Col lg={5} md={6} sm={12} className="p-5 m-auto shadow-sm rounded-lg">
+								<div>
+									<Form onSubmit={this.submitHandler}>
+										<div>
+											<Form.Group controlId="user">
+												<Form.Label>Enter Username to get your all previous query details:</Form.Label>
+												<Form.Control
+													type="text"
+													name="userName"
+													value={userName}
+													placeholder="Enter Username"
+													onChange={this.changeHandler}
+												/>
+											</Form.Group>
+										</div>
+
+										<Row className="mt-11">
+											<Col lg={5} md={6} sm={12} className="p-5 m-auto shadow-sm rounded-lg">
+												<Button variant="success btn-block" type="submit">Get Query details for User.</Button>
+											</Col>
+										</Row>
+									</Form>
+								</div>
+								<div><Link to="/PostQuery">Click here to enter a new query.</Link></div>
+							</Col>
+						</Row>
+					</Container>
+				</div>
+
+				<div className='container'>
+					<table className='table table-striped'>
+						<thead>
+							<tr>
+								<th>Year</th>
+								<th>Month</th>
+								<th>Day</th>
+								<th>RadarInfo</th>
+							</tr>
+						</thead>
+						<tbody>
+							{tb_data}
+						</tbody>
+					</table>
+				</div>
 			</div>
-			
-			<div className='container'>
-				<table className='table table-striped'>
-					<thead>
-						<tr>
-							<th>Year</th>
-							<th>Month</th>
-							<th>Day</th>
-							<th>RadarInfo</th>
-						</tr>
-					</thead>
-					<tbody>
-						{tb_data}
-					</tbody>
-				</table>
-			</div>
-		</div>
-		)		
+		)
 	}
 }
 
