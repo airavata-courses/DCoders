@@ -10,9 +10,6 @@ import lombok.NoArgsConstructor;
 @Document
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-
-	private String userName;
-	private String password;
-
+public class InvalidatedJWT {
+	private String token;
 }
