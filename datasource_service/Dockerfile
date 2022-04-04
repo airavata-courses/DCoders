@@ -1,4 +1,4 @@
-FROM python:3.9-slim-buster
+FROM python:3.9.10-slim-buster
 
 LABEL maintainer="vsgadag.me@gmail.com"
 
