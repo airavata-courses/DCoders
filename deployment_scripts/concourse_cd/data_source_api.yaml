@@ -36,23 +36,55 @@ jobs:
     plan:
       - get: git-ds
         trigger: true
-      - put: git-ds
-        params:
-          path: /tmp/
+#      - put: git-ds
+#        params:
+#          path: /tmp/
 #        passed:
 #          - "docker-build"
-      - task: copy-config
-        config:
-          platform: linux
-          image_resource:
-            type: registry-image
-            source: {repository: busybox}
-          run:
-            path: cp
-            args: ["/tmp/DCoders/deployment_scripts/k8s/config", "/tmp/"]
+#      - task: copy-config
+#        config:
+#          platform: linux
+#          image_resource:
+#            type: registry-image
+#            source: {repository: busybox}
+#          run:
+#            path: cp
+#            args: ["/tmp/DCoders/deployment_scripts/k8s/config", "/tmp/"]
       - put: k8s
         params:
           context: minikube
-          kubeconfig_file: /tmp/config
+          kubeconfig: |
+            apiVersion: v1
+            clusters:
+            - cluster:
+                certificate-authority: /home/exouser/.minikube/ca.crt
+                extensions:
+                - extension:
+                    last-update: Tue, 05 Apr 2022 19:36:51 UTC
+                    provider: minikube.sigs.k8s.io
+                    version: v1.25.2
+                  name: cluster_info
+                server: https://192.168.49.2:8443
+              name: minikube
+            contexts:
+            - context:
+                cluster: minikube
+                extensions:
+                - extension:
+                    last-update: Tue, 05 Apr 2022 19:36:51 UTC
+                    provider: minikube.sigs.k8s.io
+                    version: v1.25.2
+                  name: context_info
+                namespace: default
+                user: minikube
+              name: minikube
+            current-context: minikube
+            kind: Config
+            preferences: {}
+            users:
+            - name: minikube
+              user:
+                client-certificate: /home/exouser/.minikube/profiles/minikube/client.crt
+                client-key: /home/exouser/.minikube/profiles/minikube/client.key
           kubectl: delete pods -l app=datasource
           wait_until_ready: 300
