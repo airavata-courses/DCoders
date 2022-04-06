@@ -37,8 +37,8 @@ jobs:
     plan:
       - get: docker-ds
         trigger: true
-        passed:
-          - "docker-build"
+#        passed:
+#          - "docker-build"
       - put: k8s
         params:
           kubectl: delete pods -l app=datasource
