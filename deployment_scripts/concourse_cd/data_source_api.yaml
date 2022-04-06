@@ -10,7 +10,7 @@ resources:
     type: git
     source:
       uri: https://github.com/airavata-courses/DCoders
-      branch: main
+      branch: feature/30-implement-cd
 #  - name: docker-ds
 #    type: docker-image
 #    source:
