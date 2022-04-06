@@ -15,9 +15,10 @@ resources:
   - name: docker-ds
     type: docker-image
     source:
-      repository: DCoders/datasource_service
-      username: vinayakasg18
-      password: QmVsaWV2ZUAwNjM=
+      repository: vinayakasgadag/decoders-datasource
+      username: vinayakasgadag
+      password: MTIzNEBrdWJ5
+      tag: milestone2
   - name: k8s
     type: kubernetes
     source:
@@ -31,7 +32,7 @@ jobs:
       - put: docker-ds
         params:
           build: git-ds
-  - name: "Deploy-Application"
+  - name: "deploy-application"
     public: true
     plan:
       - get: docker-ds
