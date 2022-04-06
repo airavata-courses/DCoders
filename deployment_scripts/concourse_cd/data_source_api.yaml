@@ -39,6 +39,7 @@ jobs:
 #        passed:
 #          - "docker-build"
       - task: copy-config
+        platform: linux
         config:
           run:
             path: cp
