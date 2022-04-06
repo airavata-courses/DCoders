@@ -5,11 +5,17 @@ resource_types:
   source:
     repository: zlabjp/kubernetes-resource
 
+- name: git
+  type: registry-image
+  source:
+    repository: concourse/git-resource
+    tag: ubuntu
+
 resources:
   - name: git-ds
     type: git
     source:
-      uri: https://github.com/airavata-courses/DCoders
+      uri: https://github.com/airavata-courses/DCoders.git
       branch: feature/30-implement-cd
 #  - name: docker-ds
 #    type: docker-image
