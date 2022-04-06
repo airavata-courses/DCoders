@@ -31,7 +31,7 @@ jobs:
         trigger: true
       - put: docker-ds
         params:
-          build: datasource_service/Dockerfile
+          build: datasource_service
   - name: "deploy-application"
     public: true
     plan:
