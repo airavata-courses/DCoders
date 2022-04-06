@@ -22,7 +22,7 @@ resources:
   - name: k8s
     type: kubernetes
     source:
-      kubeconfig: https://192.168.49.2:8443
+      server: https://192.168.49.2:8443
 jobs:
 #  - name: "docker-build"
 #    public: true
