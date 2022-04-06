@@ -17,7 +17,7 @@ resources:
     source:
       repository: vinayakasgadag/decoders-datasource
       username: vinayakasgadag
-      password: MTIzNEBrdWJ5
+      password: 1234@kuby
       tag: milestone2
   - name: k8s
     type: kubernetes
