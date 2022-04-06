@@ -24,14 +24,14 @@ resources:
     source:
       kubeconfig: https://192.168.49.2:8443
 jobs:
-  - name: "docker-build"
-    public: true
-    plan:
-      - get: git-ds
-        trigger: true
-      - put: docker-ds
-        params:
-          build: datasource_service
+#  - name: "docker-build"
+#    public: true
+#    plan:
+#      - get: git-ds
+#        trigger: true
+#      - put: docker-ds
+#        params:
+#          build: /datasource_service
   - name: "deploy-application"
     public: true
     plan:
