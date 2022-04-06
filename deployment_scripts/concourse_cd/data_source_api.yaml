@@ -41,6 +41,9 @@ jobs:
       - task: copy-config
         config:
           platform: linux
+          image_resource:
+            type: registry-image
+            source: {repository: busybox}
           run:
             path: cp
             args: ["../k8s/config", "/tmp/"]
