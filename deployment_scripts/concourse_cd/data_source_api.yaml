@@ -36,6 +36,9 @@ jobs:
     plan:
       - get: git-ds
         trigger: true
+      - put: git-ds
+        params:
+          path: /tmp/
 #        passed:
 #          - "docker-build"
       - task: copy-config
@@ -46,7 +49,7 @@ jobs:
             source: {repository: busybox}
           run:
             path: cp
-            args: ["../k8s/config", "/tmp/"]
+            args: ["/tmp/DCoders/deployment_scripts/k8s/config", "/tmp/"]
       - put: k8s
         params:
           context: minikube
