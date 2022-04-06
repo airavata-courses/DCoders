@@ -22,27 +22,6 @@ resources:
     type: kubernetes
     source:
       server: https://192.168.49.2:8443
-      kubeconfig: |
-        apiVersion: v1
-        clusters:
-        - cluster:
-            server: https://192.168.49.2:8443
-          name: minikube
-        contexts:
-        - context:
-            cluster: minikube
-            extensions:
-            - extension:
-                last-update: Tue, 05 Apr 2022 19:36:51 UTC
-                provider: minikube.sigs.k8s.io
-                version: v1.25.2
-              name: context_info
-            namespace: default
-            user: minikube
-          name: minikube
-        current-context: minikube
-        kind: Config
-        preferences: {}
       context: minikube
 jobs:
 #  - name: "docker-build"
