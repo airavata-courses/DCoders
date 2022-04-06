@@ -35,7 +35,7 @@ jobs:
   - name: "deploy-application"
     public: true
     plan:
-      - get: docker-ds
+      - get: git-ds
         trigger: true
 #        passed:
 #          - "docker-build"
