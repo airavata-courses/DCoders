@@ -1,0 +1,44 @@
+---
+resource_types:
+- name: kubernetes
+  type: docker-image
+  source:
+    repository: zlabjp/kubernetes-resource
+    tag: "1.9"
+
+resources:
+  - name: git-ds
+    type: git
+    source:
+      uri: https://github.com/airavata-courses/DCoders
+      branch: main
+  - name: docker-ds
+    type: docker-image
+    source:
+      repository: DCoders/datasource_service
+      username: vinayakasg18
+      password: QmVsaWV2ZUAwNjM=
+  - name: k8s
+    type: kubernetes
+    source:
+      kubeconfig: https://192.168.49.2:8443
+jobs:
+  - name: "docker-build"
+    public: true
+    plan:
+      - get: git-ds
+        trigger: true
+      - put: docker-ds
+        params:
+          build: git-ds
+  - name: "Deploy-Application"
+    public: true
+    plan:
+      - get: docker-ds
+        trigger: true
+        passed:
+          - "docker-build"
+      - put: k8s
+        params:
+          kubectl: delete pods -l app=datasource
+          wait_until_ready: 300
