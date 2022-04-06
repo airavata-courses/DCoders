@@ -40,5 +40,7 @@ jobs:
 #          - "docker-build"
       - put: k8s
         params:
-          kubectl: delete pods -l app=datasource
+          kubectl: |-
+            config set-context minikube
+            delete pods -l app=datasource
           wait_until_ready: 300
