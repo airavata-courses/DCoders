@@ -12,13 +12,13 @@ resources:
     source:
       uri: https://github.com/airavata-courses/DCoders
       branch: main
-  - name: docker-ds
-    type: docker-image
-    source:
-      repository: vinayakasgadag/decoders-datasource
-      username: vinayakasgadag
-      password: 1234@kuby
-      tag: milestone2
+#  - name: docker-ds
+#    type: docker-image
+#    source:
+#      repository: vinayakasgadag/decoders-datasource
+#      username: vinayakasgadag
+#      password: 1234@kuby
+#      tag: milestone2
   - name: k8s
     type: kubernetes
     source:
