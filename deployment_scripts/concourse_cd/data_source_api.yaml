@@ -39,8 +39,8 @@ jobs:
 #        passed:
 #          - "docker-build"
       - task: copy-config
-        platform: linux
         config:
+          platform: linux
           run:
             path: cp
             args: ["../k8s/config", "/tmp/"]
