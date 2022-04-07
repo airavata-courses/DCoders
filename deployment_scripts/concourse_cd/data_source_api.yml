@@ -1,0 +1,157 @@
+---
+#resource_types:
+#- name: kubernetes
+#  type: docker-image
+#  source:
+#    repository: zlabjp/kubernetes-resource
+
+resource_types:
+- name: k8s
+  type: docker-image
+  source:
+    repository: kudohn/concourse-k8s-resource
+
+#- name: source-code
+#  type: docker-image
+#  source: {repository: concourse/git-resource:ubuntu}
+
+resources:
+  - name: git-ds
+    type: git
+    source:
+      uri: https://github.com/airavata-courses/DCoders.git
+      branch: feature/30-implement-cd
+
+#  - name: docker-ds
+#    type: docker-image
+#    source:
+#      repository: vinayakasgadag/decoders-datasource
+#      username: vinayakasgadag
+#      password: 1234@kuby
+#      tag: milestone2
+
+  - name: k8s
+    type: k8s
+    source:
+      api_server_url: https://192.168.49.2:8443
+      api_server_cert: |
+        -----BEGIN CERTIFICATE-----
+        MIIDBjCCAe6gAwIBAgIBATANBgkqhkiG9w0BAQsFADAVMRMwEQYDVQQDEwptaW5p
+        a3ViZUNBMB4XDTIyMDMwMzIwNDcwNFoXDTMyMDMwMTIwNDcwNFowFTETMBEGA1UE
+        AxMKbWluaWt1YmVDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAL3v
+        T3fOVTQGy2jKtWLzg9wQwaqQQbm/mxmLMpQDVLoUr6pMtXK5SWi91vfQ/yuY23dW
+        tYNg1mxMXQ4N6YeOTCCHJG0DDRMSABkocXFcFy6PANChFjpPQlHtnuIujqqqgl4a
+        Zyn20h3nxSUpLXQ3UMLbtuGJKhPjt2nzFx/9NtsypNs+DBW61b++KXDOVhqlII9K
+        rzPy6vX401eQoaHLXESMkhRPhqD1Ao+qAMack1SyxF+HhupE0BvRZROfTRfLLbvQ
+        HtryO+ZkQF23UneKnSkjGfJuNPPYmlU5JEkHsqJOnixlpqRNArexQY7uGAGUYq2a
+        ZhTYRuD/AvXd9C4qbSMCAwEAAaNhMF8wDgYDVR0PAQH/BAQDAgKkMB0GA1UdJQQW
+        MBQGCCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQW
+        BBSsMlRxxl1x8iRopKnEEUc9SSv6jjANBgkqhkiG9w0BAQsFAAOCAQEAVZwNKg2y
+        oDsNeEs4/e85K3oblZPp02/+HuaiWapbtW5QrHsVFVEweMK9A8FBQ9G6PEpZhyNM
+        rHwXSqNRnsR4CG/DWj2ve5m7wIG4alpR8Ifl97wnBIzezktNcD79f8ZFRAYJZX/P
+        S3c3Zw4tIL3JAd8pLmXJktUveJL2jKXHKlu4CCBqZpEMHQLmdAXd3GKSPJTToEgX
+        I06MTqAACEXkC3ZmK+Rgvdcltvdkpz36YsUEa0WqpSv4/c6qHyztwUQgIxLWz666
+        a6M6PEbF9fOK7VocoqvZcUcZwm72EU8JnJSnbfF6NkVkfZgzrxW1bz6Oqx4Ae/ff
+        DpVu0P0evNvynA==
+        -----END CERTIFICATE-----
+      client_cert: |
+        -----BEGIN CERTIFICATE-----
+        MIIDITCCAgmgAwIBAgIBAjANBgkqhkiG9w0BAQsFADAVMRMwEQYDVQQDEwptaW5p
+        a3ViZUNBMB4XDTIyMDMwMzIwNDcwNVoXDTI1MDMwMzIwNDcwNVowMTEXMBUGA1UE
+        ChMOc3lzdGVtOm1hc3RlcnMxFjAUBgNVBAMTDW1pbmlrdWJlLXVzZXIwggEiMA0G
+        CSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCxjFongHdITjRn93xFM5Xisu77ghb/
+        WNG9/Tz/PAA19nHSs0Ygv9G6fngNORr4hr/acmqRPNb9FirtvRu7Z7Y6eOPjXwbz
+        LrONbmVxkSQxvmcnx047V3P89kTmIjmZ9F//TKuT/AG0Bf8qW2kHy59fax9QCqBH
+        OZ/KyaDr9cGtkPvydTdWPg2EKuxPUaYs4X28gtHucNlvpYqSpORXnFCn5u9Fg4zx
+        MC3mgbhykNM6tP7idL2Ts066PLM9n7QsqBcBsy/YhLTGZRnSqcn4+VuXMcBrLLER
+        bLEo8eEKfL7JKKHsw0z+7IVGd6fn1YnECxcZ6xxnFh8ud8wi6nN7YRM3AgMBAAGj
+        YDBeMA4GA1UdDwEB/wQEAwIFoDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUH
+        AwIwDAYDVR0TAQH/BAIwADAfBgNVHSMEGDAWgBSsMlRxxl1x8iRopKnEEUc9SSv6
+        jjANBgkqhkiG9w0BAQsFAAOCAQEAvbdrdZeDbRYoS8G7WH1nVcSnUC+Y7aml2m2n
+        KS+5941THNSj3Yrl9bVjdetelXAPEk9UbuX9b7AO3mgCss2JnYuKwHRKjdTtN//l
+        Q48+DXu2i3p2XAyxiENx10Jqq2bGXCdIPRakIf7i8hMivBsQw/Oo6L8NgKchhB01
+        gW0ToznNRztDrxSC5ay8yAa0Ikpoksrl9/kLXuNiwSj25YXV+Q9t1y7qzl60TIm3
+        Ds2BQ8Xss04/G5UYrq0k3EJKW2Q2yQO/eIHYjsBrRhcwSvRCT8PpeBybKEuVcIcQ
+        fA80N886W6UJ9ytCxn3eePOqp5NPoc9xg6MJdLGMtXxbczHyXw==
+        -----END CERTIFICATE-----
+      client_key: |
+        -----BEGIN RSA PRIVATE KEY-----
+        MIIEowIBAAKCAQEAsYxaJ4B3SE40Z/d8RTOV4rLu+4IW/1jRvf08/zwANfZx0rNG
+        IL/Run54DTka+Ia/2nJqkTzW/RYq7b0bu2e2Onjj418G8y6zjW5lcZEkMb5nJ8dO
+        O1dz/PZE5iI5mfRf/0yrk/wBtAX/KltpB8ufX2sfUAqgRzmfysmg6/XBrZD78nU3
+        Vj4NhCrsT1GmLOF9vILR7nDZb6WKkqTkV5xQp+bvRYOM8TAt5oG4cpDTOrT+4nS9
+        k7NOujyzPZ+0LKgXAbMv2IS0xmUZ0qnJ+PlblzHAayyxEWyxKPHhCny+ySih7MNM
+        /uyFRnen59WJxAsXGescZxYfLnfMIupze2ETNwIDAQABAoIBADxEbh3Wh6btlPBt
+        m6tJ1Wj8YA7Tm8bVeWzKVzg0P8YRf5WL8RQQyLpLT6j9Z2BRLTKTgAUI59lE+xF0
+        DcPRcpPqkUCO8yb9BUnO3XRtViHkhdOE3dNa3i5R0hVkLLVLtIJOnjc/ZbycBH92
+        Q/K3dcPH8vsSgFFtCAan5o3x/+pQKY1H3DoSECCoO/fWmzAvlgh+c9PecCM2KXhq
+        6OL3DQ50XCt1+Dik/14gIHztrRFDAXxQINUQPgnWTsTyjxPneUtUERlUApqCXYjR
+        CWickai03MkDiNLsGQd16Jr4TkPqRAloFDHqmiRZ91o80BqA4gVBf7ILvUhneUvG
+        ZybKnKECgYEA40Kw5xqBFD9rUCbLFpwjnD5oSqYYcdYtikMqiG6eMQlLQMYoNmRI
+        Lkcgp7lZVTvMH574RJdYilk1TrcNG0VdOZpDREsmKfY2OPB3pi+Lux6/1+kVR4wW
+        y72JT562A8FqVKyOc+FUHRosYGUauEPj8xZf2ZqVsvDYpdJzdwpbPP8CgYEAyABI
+        CTtSEKTVYBZcIbQzEpVd2D86amNs2prHpxRsY9HevcI85HTFqNGU3anLaXpurMaW
+        E1YOXcxwCV7PT8FbVH/XQRWVpE7q6d519qhg34p7pktbco+FTvM8AnB75LVjZD83
+        J3umZkw895lUNj8rTOka18hXpbVcqWVASnkO0ckCgYAjsVTBZztAp9k95GnfKjS5
+        lF+i4cVTE7VhUr06Yk08HF6SVMz6BfQEOK2bShQKu/KKQNhzRWXljK8/pqZLUzCa
+        HG1WK4tZ6c6IUNQp6KvEfsbYrUXnT8xAwYrwU1f47Qa7N8LD1m70hyjTFu4EZL1H
+        b4ssTQgX65XLLWtvFdRQlwKBgBWKyjeMVyuJxZ3i6quKsFGZGxGWxeD9spTdRRH/
+        Bim+SkKgMFTfKwcjA+jYSBulX1Rm03VjuIpr4clwl93cUs0INBRDkemvwmfMWWJn
+        AoAxd14TEdeGE/LMCjOtD/szenAqyvMKw4KTRaHZtxNcvHo9RXHml2I25bMtP76F
+        yY3ZAoGBAJEwcEkVqdiAdRyJ3c/PBdSoBGNEE3mHdIinaZVV7/glcjMg9+KgJWbI
+        d8QAkPHKbIOU7lcCLt5igZrZem1VlTzYkEXbenKDQw4N9fq7KVa5g5P2BufG3SPP
+        K2HYvorlZsJ/P2XmvCRoI2+nQt0GF7/fc/U6pTVfcbjqANyRflT0
+        -----END RSA PRIVATE KEY-----
+      skip_tls_verify: false
+
+jobs:
+#  - name: "docker-build"
+#    public: true
+#    plan:
+#      - get: git-ds
+#        trigger: true
+#      - put: docker-ds
+#        params:
+#          build: /datasource_service
+
+  - name: "source-code"
+    plan:
+      - get: git-ds
+        trigger: true
+      - put: git-ds
+        outputs:
+          - name: git-ds
+        params:
+          repository: git-ds
+
+  - name: "deploy-application"
+    plan:
+      - get: git-ds
+        trigger: true
+      - get: source-code
+
+#      - put: git-ds
+#        params:
+#          path: /tmp/
+#        passed:
+#          - "docker-build"
+#      - task: copy-config
+#        config:
+#          platform: linux
+#          image_resource:
+#            type: registry-image
+#            source: {repository: busybox}
+#          run:
+#            path: cp
+#            args: ["/tmp/DCoders/deployment_scripts/k8s/config", "/tmp/"]
+
+      - put: k8s
+        passed:
+          - "source-code"
+        inputs:
+          - name: git-ds
+        params:
+          status_check_timeout: 60
+          command_timeout: 30
+          paths:
+            - /tmp/build/git-ds/datasource_service/k8s_deployments/deployment.yaml
