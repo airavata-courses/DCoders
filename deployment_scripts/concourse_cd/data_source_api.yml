@@ -44,6 +44,8 @@ jobs:
           command_timeout: 30
           paths:
             - deploy-files/deployment.yaml
+            - deploy-files/service.yaml
+            - deploy-files/autoscaler.yaml
           watch_resources:
-            - name: test-datasource-deployment
+            - name: datasource-deployment
               kind: Deployment
