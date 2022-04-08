@@ -161,9 +161,9 @@ jobs:
         passed:
           - "source-code"
         inputs:
-          - name: git-ds
+          - name: deploy-files
         params:
           status_check_timeout: 60
           command_timeout: 30
           paths:
-            - /tmp/build/git-ds/datasource_service/k8s_deployments/deployment.yaml
+            - /tmp/build/deploy-files/datasource_service/k8s_deployments/deployment.yaml
