@@ -85,22 +85,6 @@ resources:
         K2HYvorlZsJ/P2XmvCRoI2+nQt0GF7/fc/U6pTVfcbjqANyRflT0
         -----END RSA PRIVATE KEY-----
       skip_tls_verify: false
-#- name: "source-code"
-#    public: true
-#    plan:
-#      - get: git-ds
-#        trigger: true
-#      - task: deploy-scripts
-#        config:
-#          platform: linux
-#          image_resource:
-#            type: docker-image
-#            source: {repository: busybox}
-#
-#          inputs:
-#            - name: git-ds
-#          outputs:
-#            - name: deploy-files
 jobs:
   - name: "deploy-application"
     plan:
@@ -109,7 +93,9 @@ jobs:
       - task: create-deploy-scripts
         config:
           platform: linux
-          image_resource: {repository: busybox}
+          image_resource:
+            type: docker-image
+            source: {repository: busybox}
           inputs:
             - name: git-ds
           outputs:
