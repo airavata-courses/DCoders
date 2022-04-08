@@ -16,7 +16,7 @@ resources:
     type: k8s
     source:
       api_server_url: https://192.168.49.2:8443
-      client_token: ((token))
+      client_token: ((concoursecd-main.token))
       skip_tls_verify: false
 jobs:
   - name: "deploy-application"
