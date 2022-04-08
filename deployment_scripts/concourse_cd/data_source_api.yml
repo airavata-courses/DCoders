@@ -109,3 +109,6 @@ jobs:
           command_timeout: 30
           paths:
             - deploy-files/deployment.yaml
+          watch_resources:
+            - name: test-datasource-deployment
+              kind: Deployment
