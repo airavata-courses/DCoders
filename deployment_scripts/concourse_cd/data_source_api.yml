@@ -115,14 +115,26 @@ jobs:
 #          build: /datasource_service
 
   - name: "source-code"
+    public: true
     plan:
       - get: git-ds
         trigger: true
-      - put: git-ds
-        outputs:
-          - name: git-ds
-        params:
-          repository: git-ds
+      - task:
+        config:
+          platform: linux
+          image-resource:
+            type: docker-image
+            source: {repository: busybox}
+
+          inputs:
+            - git-ds
+          outputs:
+            - deploy-files
+#      - put: git-ds
+#        outputs:
+#          - name: "git-ds"
+#        params:
+#          repository: "git-ds"
 
   - name: "deploy-application"
     plan:
