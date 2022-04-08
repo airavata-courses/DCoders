@@ -1,19 +1,9 @@
 ---
-#resource_types:
-#- name: kubernetes
-#  type: docker-image
-#  source:
-#    repository: zlabjp/kubernetes-resource
-
 resource_types:
 - name: k8s
   type: docker-image
   source:
     repository: kudohn/concourse-k8s-resource
-
-#- name: source-code
-#  type: docker-image
-#  source: {repository: concourse/git-resource:ubuntu}
 
 resources:
   - name: git-ds
@@ -21,14 +11,6 @@ resources:
     source:
       uri: https://github.com/airavata-courses/DCoders.git
       branch: feature/30-implement-cd
-
-#  - name: docker-ds
-#    type: docker-image
-#    source:
-#      repository: vinayakasgadag/decoders-datasource
-#      username: vinayakasgadag
-#      password: 1234@kuby
-#      tag: milestone2
 
   - name: k8s
     type: k8s
@@ -103,67 +85,41 @@ resources:
         K2HYvorlZsJ/P2XmvCRoI2+nQt0GF7/fc/U6pTVfcbjqANyRflT0
         -----END RSA PRIVATE KEY-----
       skip_tls_verify: false
-
-jobs:
-#  - name: "docker-build"
+#- name: "source-code"
 #    public: true
 #    plan:
 #      - get: git-ds
 #        trigger: true
-#      - put: docker-ds
-#        params:
-#          build: /datasource_service
-
-  - name: "source-code"
-    public: true
-    plan:
-      - get: git-ds
-        trigger: true
-      - task:
-        config:
-          platform: linux
-          image-resource:
-            type: docker-image
-            source: {repository: busybox}
-
-          inputs:
-            - git-ds
-          outputs:
-            - deploy-files
-#      - put: git-ds
-#        outputs:
-#          - name: "git-ds"
-#        params:
-#          repository: "git-ds"
-
+#      - task: deploy-scripts
+#        config:
+#          platform: linux
+#          image_resource:
+#            type: docker-image
+#            source: {repository: busybox}
+#
+#          inputs:
+#            - name: git-ds
+#          outputs:
+#            - name: deploy-files
+jobs:
   - name: "deploy-application"
     plan:
       - get: git-ds
         trigger: true
-      - get: source-code
-
-#      - put: git-ds
-#        params:
-#          path: /tmp/
-#        passed:
-#          - "docker-build"
-#      - task: copy-config
-#        config:
-#          platform: linux
-#          image_resource:
-#            type: registry-image
-#            source: {repository: busybox}
-#          run:
-#            path: cp
-#            args: ["/tmp/DCoders/deployment_scripts/k8s/config", "/tmp/"]
+      - task: create-deploy-scripts
+        config:
+          platform: linux
+          image_resource: {repository: busybox}
+          inputs:
+            - name: git-ds
+          outputs:
+            - name: deploy-files
+          run:
+            path: git-ds/deployment_scripts/copy_files.sh
 
       - put: k8s
-        passed:
-          - "source-code"
-        inputs:
-          - name: deploy-files
         params:
           status_check_timeout: 60
           command_timeout: 30
           paths:
-            - /tmp/build/deploy-files/datasource_service/k8s_deployments/deployment.yaml
+            - deploy-files/deployment.yaml
