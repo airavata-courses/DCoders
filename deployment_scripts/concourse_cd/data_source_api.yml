@@ -16,7 +16,9 @@ resources:
     type: k8s
     source:
       api_server_url: https://192.168.49.2:8443
-      client_token: ((default-token-vz4pd.token))
+      api_server_cert: ((k8s-secret.api_server_cert))
+      client_cert: ((k8s-secret.client_cert))
+      client_key: ((k8s-secret.client_key))
       skip_tls_verify: false
 jobs:
   - name: "deploy-application"
