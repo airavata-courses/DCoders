@@ -1,0 +1,51 @@
+---
+resource_types:
+- name: k8s
+  type: docker-image
+  source:
+    repository: kudohn/concourse-k8s-resource
+
+resources:
+  - name: git-ds
+    type: git
+    source:
+      uri: https://github.com/airavata-courses/DCoders.git
+      branch: feature/30-implement-cd
+
+  - name: k8s
+    type: k8s
+    source:
+      api_server_url: https://192.168.49.2:8443
+      api_server_cert: ((k8s-secret.api_server_cert))
+      client_cert: ((k8s-secret.client_cert))
+      client_key: ((k8s-secret.client_key))
+      skip_tls_verify: false
+jobs:
+  - name: "deploy-application"
+    plan:
+      - get: git-ds
+        trigger: true
+      - task: create-deploy-scripts
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source: {repository: busybox}
+          inputs:
+            - name: git-ds
+          outputs:
+            - name: deploy-files
+          run:
+            path: git-ds/deployment_scripts/copy_files.sh
+
+      - put: k8s
+        params:
+          status_check_timeout: 60
+          command_timeout: 30
+          paths:
+            - deploy-files/UserManagement/deployment.yaml
+            - deploy-files/UserManagement/service.yaml
+            - deploy-files/UserManagement/autoscaler.yaml
+          watch_resources:
+            - name: um-deployment
+              kind: Deployment

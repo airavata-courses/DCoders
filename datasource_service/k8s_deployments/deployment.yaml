@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: test-datasource-deployment
+  name: datasource-deployment
   labels:
     app: datasource
 spec:
