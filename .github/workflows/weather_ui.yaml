@@ -35,7 +35,7 @@ jobs:
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
         image: vinayakasgadag/dcoders-weather-ui
-        tags: milestone2
+        tags: milestone3
         registry: docker.io
         directory: weather_ui
         dockerfile: weather_ui/Dockerfile
