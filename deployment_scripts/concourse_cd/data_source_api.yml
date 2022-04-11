@@ -2,14 +2,13 @@
 resource_types:
 - name: k8s
   type: docker-image
-  icon: kubernetes
   source:
     repository: kudohn/concourse-k8s-resource
 
 resources:
   - name: git-ds
     type: git
-    icon: github
+    icon: git
     source:
       uri: https://github.com/airavata-courses/DCoders.git
       branch: feature/30-implement-cd
@@ -26,6 +25,7 @@ resources:
 
   - name: k8s
     type: k8s
+    icon: kubernetes
     source:
       api_server_url: https://192.168.49.2:8443
       api_server_cert: ((k8s-secret.api_server_cert))
