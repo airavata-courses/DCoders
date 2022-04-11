@@ -19,6 +19,7 @@ resources:
     icon: docker
     source:
       repository: vinayakasgadag/decoders-datasource
+      tag: milestone3
       username: vinayakasgadag
       password: 9b770f15-c13f-41cd-a4df-6a1a175141a6
 
@@ -53,6 +54,11 @@ jobs:
           params:
             context: git-ds/datasource_service/Dockerfile
           run:
+            args:
+              - echo "Current directoy"
+              - ls
+              - pwd
+              - cd git-ds/datasource_service
             path: build
       - put: build-image
         params:
@@ -61,6 +67,7 @@ jobs:
   - name: "deploy-application"
     plan:
       - get: git-ds
+        passed: "build-publish"
       - task: create-deploy-scripts
         config:
           platform: linux
