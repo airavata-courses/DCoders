@@ -8,23 +8,58 @@ resource_types:
 resources:
   - name: git-ds
     type: git
+    icon: github
     source:
       uri: https://github.com/airavata-courses/DCoders.git
       branch: feature/30-implement-cd
 
+  # Where we will push the image
+  - name: build-image
+    type: registry-image
+    icon: docker
+    source:
+      repository: vinayakasgadag/decoders-datasource
+      username: vinayakasgadag
+      password: 9b770f15-c13f-41cd-a4df-6a1a175141a6
+
   - name: k8s
     type: k8s
+    icon: kubernetes
     source:
       api_server_url: https://192.168.49.2:8443
       api_server_cert: ((k8s-secret.api_server_cert))
       client_cert: ((k8s-secret.client_cert))
       client_key: ((k8s-secret.client_key))
       skip_tls_verify: false
+
 jobs:
-  - name: "deploy-application"
+  - name: "build-publish"
     plan:
       - get: git-ds
         trigger: true
+      - get: build-image
+      - task: build-publish-image
+        privileged: true
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source: vito/oci-build-task
+          inputs:
+            - name: git-ds
+          outputs:
+            - name: milestone3
+          params:
+            context: git-ds/datasource_service/Dockerfile
+          run:
+            path: build
+      - put: push-image
+        params:
+          image: milestone3/milestone3.tar
+
+  - name: "deploy-application"
+    plan:
+      - get: git-ds
       - task: create-deploy-scripts
         config:
           platform: linux
