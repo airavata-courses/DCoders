@@ -54,7 +54,7 @@ jobs:
             context: git-ds/datasource_service/Dockerfile
           run:
             path: build
-      - put: push-image
+      - put: build-image
         params:
           image: milestone3/milestone3.tar
 
