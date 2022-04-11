@@ -2,6 +2,7 @@
 resource_types:
 - name: k8s
   type: docker-image
+  icon: kubernetes
   source:
     repository: kudohn/concourse-k8s-resource
 
@@ -25,7 +26,6 @@ resources:
 
   - name: k8s
     type: k8s
-    icon: kubernetes
     source:
       api_server_url: https://192.168.49.2:8443
       api_server_cert: ((k8s-secret.api_server_cert))
@@ -67,7 +67,7 @@ jobs:
   - name: "deploy-application"
     plan:
       - get: git-ds
-        passed: "build-publish"
+        passed: ["build-publish"]
       - task: create-deploy-scripts
         config:
           platform: linux
