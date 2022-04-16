@@ -39,7 +39,7 @@ jobs:
     plan:
       - get: git-ds
         trigger: true
-      - task:
+      - task: build-image-task
         privileged: true
         config:
           platform: linux
