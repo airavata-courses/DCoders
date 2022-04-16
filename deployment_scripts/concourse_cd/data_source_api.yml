@@ -59,6 +59,7 @@ jobs:
       - put: build-image
         params:
           image: image/image.tar
+          version: milestone3
 
   - name: "deploy-application"
     plan:
