@@ -15,11 +15,10 @@ resources:
 
   # Where we will push the image
   - name: build-image
-    type: docker-image
+    type: registry-image
     icon: docker
     source:
       repository: vinayakasgadag/decoders-datasource
-      tag: milestone3
       username: vinayakasgadag
       password: 9b770f15-c13f-41cd-a4df-6a1a175141a6
 
@@ -47,16 +46,19 @@ jobs:
           image_resource:
             type: registry-image
             source:
-              repository: concourse/oci-build-task
+              repository: vito/oci-build-task
           inputs:
             - name: git-ds
           outputs:
-            - name: milestone3
+            - name: image
           params:
             CONTEXT: git-ds/datasource_service
             UNPACK_ROOTFS: true
           run:
             path: build
+      - put: build-image
+        params:
+          image: image/image.tar
 
   - name: "deploy-application"
     plan:
