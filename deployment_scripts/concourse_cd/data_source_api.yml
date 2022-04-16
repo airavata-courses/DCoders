@@ -15,7 +15,7 @@ resources:
 
   # Where we will push the image
   - name: build-image
-    type: registry-image
+    type: docker-image
     icon: docker
     source:
       repository: vinayakasgadag/decoders-datasource
@@ -35,34 +35,14 @@ resources:
 
 jobs:
   - name: "build-publish"
+    public: true
+    serial: true
     plan:
       - get: git-ds
         trigger: true
-      - get: build-image
-      - task: build-publish-image
-        privileged: true
-        config:
-          platform: linux
-          image_resource:
-            type: registry-image
-            source:
-              repository: vito/oci-build-task
-          inputs:
-            - name: git-ds
-          outputs:
-            - name: milestone3
-          params:
-            context: git-ds/datasource_service/Dockerfile
-          run:
-            args:
-              - echo "Current directoy"
-              - ls
-              - pwd
-              - cd git-ds/datasource_service
-            path: build
       - put: build-image
         params:
-          image: milestone3/milestone3.tar
+          build: git-ds/datasource_service
 
   - name: "deploy-application"
     plan:
