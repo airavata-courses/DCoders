@@ -40,9 +40,23 @@ jobs:
     plan:
       - get: git-ds
         trigger: true
-      - put: build-image
-        params:
-          build: git-ds/datasource_service
+      - task:
+        privileged: true
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: concourse/oci-build-task
+          inputs:
+            - name: git-ds
+          outputs:
+            - name: milestone3
+          params:
+            CONTEXT: git-ds/datasource_service
+            UNPACK_ROOTFS: true
+          run:
+            path: build
 
   - name: "deploy-application"
     plan:
