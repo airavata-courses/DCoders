@@ -5,6 +5,8 @@ const request = require('request');
 const bodyparser = require('body-parser');
 const cors = require("cors")
 
+
+
 app.use(bodyparser.urlencoded({ extended: false }))
 app.use(bodyparser.json())
 app.use(
@@ -148,59 +150,53 @@ app.get('/logout', async (req, res) => {
     })
 })
 
-/*
-app.get('/plot', async (req, res) => {
 
-    year_new = req.query.year;
-    month_new = req.query.month;
-    day_new = req.query.day;
-    radar_new = req.query.radarInfo;
+app.get('/plotmerra',async(req,res) => {
 
-    const options_auth = {
-        uri: 'http://127.0.0.1:8080/user/authentication',
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token
+    conn.createChannel(function (channelError, channel) {
+
+        console.log("Inside Produce of node js");
+        if (channelError) {
+            console.log("Inside channelError");
+            console.log(err);
+            throw channelError;
         }
-    }
+        console.log(req.body)
+        const QUEUE = 'Meera';
+        channel.assertQueue(QUEUE,{
+            durable: false
+        });
+        channel.sendToQueue(QUEUE, Buffer.from(JSON.stringify(req.query)));
+    })        
 
-    request(options_auth, (error, response_auth, body) => {
-
-        if (response_auth.statusCode == 200) {
-
-            console.log("Call 1")
-            const options = {
-                uri: `http://127.0.0.1:8000/api/v1/${year_new}/${month_new}/${day_new}/${radar_new}`,
-                //uri: `http://127.0.0.1:8080/user/dummy/27031001/December/22432454/NSFR`,
-                method: "GET",
-                json: true,
-            }
-            console.log("Call mid")
-            request(options, (error, response, body) => {
-                //  console.log(response.body)
-
-                console.log("Call internal")
-                console.log("Call internal new")
-                response_auth.send(body)
-            })
+    conn.createChannel(function (err, channel_new) {
+        console.log("Inside Consume of node js");
+        if (err) {
+            console.log("Inside err");
+            console.log(err);
+            throw err;
         }
 
-        else {
-            console.log("Call 2")
-            console.log(response_auth.body)
-            res.send("Unauthorized user")
-            res.end()
-        }
-        //console.log(body)
-        //res.send(body)
-        res.end()
+        const QUEUE_R = 'Meerareturn';
+        channel_new.assertQueue(QUEUE_R,{
+            durable: false
+        });
 
+         channel_new.consume(QUEUE_R, (msg) => {
+
+            console.log("Message received");
+            console.log(msg.content.toString());
+            
+            channel_new.ack(msg);
+            channel_new.close();
+            res.send(msg.content.toString())
+            //return res.status(200).json(JSON.stringify(msg["content"].toString()));
+        });     
     })
+
+
+    console.log("Nowhere");
 })
-*/
-
-
 
 
 app.get('/plot', async (req, res) => {
@@ -266,6 +262,17 @@ var server = app.listen(8081, function () {
     var host = server.address().address
     var port = server.address().port
     console.log("Server stated at Port Number: ", +port)
+})
+
+global.conn = null
+const amqp = require('amqplib/callback_api');
+amqp.connect('amqp://127.0.0.1', function (connError, connection) {
+
+    if (connError) {
+        console.log("Inside Error");
+        throw connError;
+    }
+    conn = connection;
 })
 
 module.exports = router
