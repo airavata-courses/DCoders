@@ -14,11 +14,12 @@ resources:
       branch: feature/30-implement-cd
 
   # Where we will push the image
-  - name: build-image
+  - name: publish-image
     type: registry-image
     icon: docker
     source:
       repository: vinayakasgadag/decoders-datasource
+      tag: milestone-3
       username: vinayakasgadag
       password: 9b770f15-c13f-41cd-a4df-6a1a175141a6
 
@@ -56,10 +57,9 @@ jobs:
             UNPACK_ROOTFS: true
           run:
             path: build
-      - put: build-image
+      - put: publish-image
         params:
           image: image/image.tar
-          version: milestone3
 
   - name: "deploy-application"
     plan:
