@@ -62,7 +62,7 @@ jobs:
   - name: "deploy-application"
     plan:
       - get: git-ds
-        trigger: true
+        passed: ["build-publish"]
       - task: create-deploy-scripts
         config:
           platform: linux
