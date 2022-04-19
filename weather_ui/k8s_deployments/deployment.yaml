@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-gateway-deployment
+  name: weather-ui-deployment
   labels:
-    app: api-gateway
+    app: weather-ui
 spec:
   selector:
     matchLabels:
-      app: api-gateway
+      app: weather-ui
   replicas: 1
   template:
     metadata:
       labels:
-        app: api-gateway
+        app: weather-ui
     spec:
       containers:
-        - name: api-gateway
-          image: vinayakasgadag/dcoders-api-gateway:milestone2
+        - name: weather-ui
+          image: vinayakasgadag/dcoders-weather-ui:milestone2
           resources:
             limits:
               cpu: 2
-              memory: "5Gi"
+              memory: "2Gi"
             requests:
               cpu: 1
-              memory: "2Gi"
+              memory: "1Gi"
           ports:
-            - containerPort: 8081
+            - containerPort: 3000

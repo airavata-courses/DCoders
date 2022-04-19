@@ -1,14 +1,14 @@
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: api-gateway-deployment
+  name: weather-ui-autoscaler
   labels:
-    app: api-gateway
+    app: weather-ui
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: api-gateway-deployment
+    name: weather-ui-deployment
   minReplicas: 1
   maxReplicas: 5
   targetCPUUtilizationPercentage: 60
