@@ -17,7 +17,7 @@ resources:
     type: registry-image
     icon: docker
     source:
-      repository: vinayakasgadag/dcoders-api-gateway
+      repository: vinayakasgadag/dcoders-weather-ui
       tag: milestone-3
       username: vinayakasgadag
       password: 9b770f15-c13f-41cd-a4df-6a1a175141a6
@@ -51,7 +51,7 @@ jobs:
           outputs:
             - name: image
           params:
-            CONTEXT: git-ds/api_gateway
+            CONTEXT: git-ds/weather_ui
             UNPACK_ROOTFS: true
           run:
             path: build
@@ -81,9 +81,9 @@ jobs:
           status_check_timeout: 60
           command_timeout: 30
           paths:
-            - deploy-files/api_gateway/deployment.yaml
-            - deploy-files/api_gateway/service.yaml
-            - deploy-files/api_gateway/autoscaler.yaml
+            - deploy-files/weather_ui/deployment.yaml
+            - deploy-files/weather_ui/service.yaml
+            - deploy-files/weather_ui/autoscaler.yaml
           watch_resources:
-            - name: api-gateway-deployment
+            - name: weather-ui-deployment
               kind: Deployment

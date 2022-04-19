@@ -12,6 +12,16 @@ resources:
       uri: https://github.com/airavata-courses/DCoders.git
       branch: feature/30-implement-cd
 
+  # Where we will push the image
+  - name: publish-image
+    type: registry-image
+    icon: docker
+    source:
+      repository: vinayakasgadag/dcoders-user-management
+      tag: milestone-3
+      username: vinayakasgadag
+      password: 9b770f15-c13f-41cd-a4df-6a1a175141a6
+
   - name: k8s
     type: k8s
     source:
@@ -21,6 +31,33 @@ resources:
       client_key: ((k8s-secret.client_key))
       skip_tls_verify: false
 jobs:
+  - name: "build-publish"
+    public: true
+    serial: true
+    plan:
+      - get: git-ds
+        trigger: true
+      - task: build-image-task
+        privileged: true
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: vito/oci-build-task
+          inputs:
+            - name: git-ds
+          outputs:
+            - name: image
+          params:
+            CONTEXT: git-ds/UserManagement
+            UNPACK_ROOTFS: true
+          run:
+            path: build
+      - put: publish-image
+        params:
+          image: image/image.tar
+
   - name: "deploy-application"
     plan:
       - get: git-ds
