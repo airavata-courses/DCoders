@@ -1,8 +1,6 @@
-FROM alpine
+FROM node:17
 
 LABEL maintainer="Chaitanya Shekhar Deshpande"
-
-RUN apk add --update nodejs npm
 
 COPY package*.json ./
 
