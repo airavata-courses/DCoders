@@ -22,10 +22,6 @@
   : Resource Type -
     - Kubernetes docker resource to deploy the applications to k8s cluster
     - We used resource type {kudohn/concourse-k8s-resource}
-
-
-  : Resources -
-    - We need explicitly define the resource types, which are declared before we can use them. so we are going to tell concourse that we want to use kubernetes external resource ``{kudohn/concourse-k8s-resource}``
     ```yaml
     resource_types:
     - name: k8s
@@ -34,6 +30,9 @@
         repository: kudohn/concourse-k8s-resource
     ```
 
+
+  : Resources -
+    - We need explicitly define the resource types, which are declared before we can use them. so we are going to tell concourse that we want to use kubernetes external resource ``{kudohn/concourse-k8s-resource}``
     - we are using ```{git}``` resource supported by concourse which will pull the code from code repositories and we are using gitHub in our case
     - We are using ```{registry-image}``` resource to build and publish our docker image to docker-hub
     - We are using ``` {k8s} ``` reource, as defined above in the resource type section to connect to k8s cluster and deploy applications
