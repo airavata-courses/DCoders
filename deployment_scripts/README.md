@@ -68,6 +68,9 @@
      
   : Jobs -
     - Jobs are resposible for creating the required tasks (defined in job definition) to run the pipeline
+    - Jobs have stages(plan) and tasks
+    - Stage or plan: it can be defined to be dependent on previous stage and run only if it is successful
+    - Task: Useful when we want to run some scripts to achieve somehting before the job can be run
     ```yaml
     jobs:
     - name: "build-publish"
@@ -126,6 +129,11 @@
               - name: datasource-deployment
                 kind: Deployment
     ```
+
+
+##### Example view of concurse dashboard
+<img width="1117" alt="Screen Shot 2022-04-21 at 3 24 38 PM" src="https://user-images.githubusercontent.com/52463165/164537737-15ed588b-54ac-4287-b495-29dbce79c9ed.png">
+
     
 ##### Why Concourse?
   - The beauty of the concourse is the declarative appraoch and the flexibility to automate the builds the way we want to using the resources, jobs and task concpets
