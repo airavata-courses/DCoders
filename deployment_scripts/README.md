@@ -138,7 +138,7 @@
 ##### Why Concourse?
   - The beauty of the concourse is the declarative appraoch and the flexibility to automate the builds the way we want to using the resources, jobs and task concpets
   - We don't need ansible or any other tool to automate the deployments since concourse supports it through the resources
-  - Concourse can be run as individual standalone cluster or as a distributed system as service inside the kubernetes cluster, which will scale vertically as the number of pipeline job increses, and this is very big advantage comparing to Jenkins or any other tools
+  - Concourse can be run as individual standalone cluster or as a distributed system as service inside the kubernetes cluster, which will scale horizontally as the number of pipeline or the job increses, and this is a very big advantage comparing to Jenkins or any other tools
 
 
 ##### For more details on [concourse](https://concourse-ci.org/docs.html)
