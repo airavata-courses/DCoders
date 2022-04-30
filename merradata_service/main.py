@@ -20,12 +20,14 @@ app = FastAPI(title="Merra-api")
 
 print("This is python code")
 
-#credentials = pika.PlainCredentials(username='guest', password='guest')
-connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host='127.0.0.1')
-)
-
-print("Before connection channel")
+try:
+    print("connecting to rabbitMQ")
+    #credentials = pika.PlainCredentials(username='guest', password='guest')
+    connection = pika.BlockingConnection(
+        pika.ConnectionParameters(host='172.17.0.2')
+    )
+except:
+    print("Error while connecting to rabbitMQ channel")
 
 
 class SessionWithHeaderRedirection(requests.Session):
@@ -151,19 +153,24 @@ global store
 store = ""
 def callback(ch, method, properties, body):
     print("Message received successfully")
-    data = body.decode("utf-8")
-    data = json.loads(data)
-    store = merra_data(data["year"],data["month"])
-    print(store)
-    #store = store.decode("utf-8")
-    #print(type(store))
-    #
-    store["encoded_image"] = store["encoded_image"].decode("utf-8")
-    store = json.dumps(store)
-    channel_return = connection.channel()
-    channel_return.queue_declare(queue='Meerareturn')
-    channel_return.basic_publish(exchange='', routing_key='Meerareturn', body=store)
-    channel_return.close()
+    try:
+        data = body.decode("utf-8")
+        print(body)
+        data = json.loads(data)
+        print(data)
+        store = merra_data(data["year"],data["month"])
+        print(store)
+        #store = store.decode("utf-8")
+        #print(type(store))
+        #
+        store["encoded_image"] = store["encoded_image"].decode("utf-8")
+        store = json.dumps(store)
+        channel_return = connection.channel()
+        channel_return.queue_declare(queue='Meerareturn')
+        channel_return.basic_publish(exchange='', routing_key='Meerareturn', body=store)
+        channel_return.close()
+    except:
+        print("Issue")
 
 
 channel = connection.channel()
@@ -182,4 +189,3 @@ channel.start_consuming()
 def start():
 #     Start fastAPI using uvicorn 
     uvicorn.run("main:app", port=8000, host="127.0.0.1")
-
