@@ -13,6 +13,7 @@ import uvicorn
 import json
 from multiprocessing import connection
 import pika
+from dotenv import load_dotenv
 from netCDF4 import Dataset
 
 
@@ -28,6 +29,8 @@ try:
     )
 except:
     print("Error while connecting to rabbitMQ channel")
+
+
 
 
 class SessionWithHeaderRedirection(requests.Session):
@@ -62,9 +65,10 @@ class SessionWithHeaderRedirection(requests.Session):
 @app.get("/api/merra/{year}/{month}")
 def merra_data(year, month):
 
-    username = "cdeshpa"
+    load_dotenv()
 
-    password= "Dcoders_ads2022"
+    username = os.environ.get('USERNAME')
+    password = os.environ.get('PASSWORD')
 
     session = SessionWithHeaderRedirection(username, password)
 
@@ -155,11 +159,8 @@ def callback(ch, method, properties, body):
     print("Message received successfully")
     try:
         data = body.decode("utf-8")
-        print(body)
-        data = json.loads(data)
-        print(data)
+        data = json.loads(data)        
         store = merra_data(data["year"],data["month"])
-        print(store)
         #store = store.decode("utf-8")
         #print(type(store))
         #
@@ -188,4 +189,4 @@ channel.start_consuming()
 
 def start():
 #     Start fastAPI using uvicorn 
-    uvicorn.run("main:app", port=8000, host="127.0.0.1")
+    uvicorn.run("main:app", port=8001, host="127.0.0.1")

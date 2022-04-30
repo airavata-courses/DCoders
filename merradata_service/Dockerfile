@@ -13,7 +13,7 @@ RUN conda install -c conda-forge -y netcdf4
 RUN conda install -c conda-forge -y numpy
 RUN conda install -c conda-forge -y matplotlib
 RUN conda install -c conda-forge -y pandas
-#RUN conda install -c conda-forge -y pika
+RUN pip install python-dotenv
 RUN pip install pika
 RUN conda install -c conda-forge -y imageio
 RUN conda install -c conda-forge -y uvicorn
@@ -27,5 +27,5 @@ WORKDIR /merradata_service
 
 RUN rabbitmq-server -detached
 
-EXPOSE 8000
+EXPOSE 8001
 CMD ["uvicorn", "main:app","--reload"]
