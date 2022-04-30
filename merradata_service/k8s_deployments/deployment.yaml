@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: merradata-deployment
+  labels:
+    app: merradata
+spec:
+  selector:
+    matchLabels:
+      app: merradata
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: merradata
+    spec:
+      containers:
+        - name: merradata
+          image: vinayakasgadag/decoders-merradata:milestone3
+          resources:
+            limits:
+              cpu: 2
+              memory: "15Gi"
+            requests:
+              cpu: 1
+              memory: "6Gi"
+          ports:
+            - containerPort: 8001

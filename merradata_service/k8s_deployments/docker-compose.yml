@@ -1,0 +1,17 @@
+services:
+  # RabbitMQ
+  rabbit:
+    hostname: rabbit
+    image: rabbitmq:3.6.1-management
+    ports:
+      - "5672:5672"  # we forward this port because it's useful for debugging
+      - "15672:15672"  # here, we can access rabbitmq management plugin
+
+  # App
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.txt
+    hostname: "127.0.0.1"
+    ports:
+      - "8000:8000"
