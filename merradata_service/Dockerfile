@@ -25,7 +25,10 @@ COPY . /merradata_service/
 
 WORKDIR /merradata_service
 
-RUN rabbitmq-server -detached
+# RUN rabbitmq-server -detached
 
 EXPOSE 8001
 CMD ["uvicorn", "main:app","--reload"]
+
+
+
