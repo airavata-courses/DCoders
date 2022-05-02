@@ -18,7 +18,7 @@
    - To run messaging queue via docker, use: ``` docker run -d --name rabbit -p 5672:5672 -p 5673:5673 -p 15672:15672 rabbitmq:3 ```
 
    - ``` docker run -it -p 8001:8001 chaitanyad20/merradatav0 ```
-   - ``` docker run --env-file=env_file_name -p 8001:8001 merradata:01 ```
+   - ``` docker run --env-file=env_file_name -p 8001:8001 chaitanyad20/merradatav0 ```
 
    - Example request:
 
