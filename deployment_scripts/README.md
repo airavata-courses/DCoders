@@ -1,5 +1,7 @@
 ## Goal: Continuous deployment using Concourse CI/CD tool
 
+TL;DR
+
 ### Pipelines
 
 ```api-gateway``` | ```data-source``` | ```user-management``` | ```merra-data-source```
