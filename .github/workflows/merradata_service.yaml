@@ -4,13 +4,13 @@ on:
   push:
     branches: [ main ]
     paths:
-      - "datasource_service/**"
-      - ".github/workflows/datasource_service.yaml"
+      - "merradata_service/**"
+      - ".github/workflows/merradata_service.yaml"
   pull_request:
     branches: [ main ]
     paths:
-      - "datasource_service/**"
-      - ".github/workflows/datasource_service.yaml"
+      - "merradata_service/**"
+      - ".github/workflows/merradata_service.yaml"
 
 jobs:
   build:
@@ -29,11 +29,9 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        cd datasource_service
+        cd merradata_service
         python -m pip install --upgrade pip
-        python -m pip install poetry==1.1.12 flake8
-        poetry install
-        poetry build
+        python -m pip install poetry==1.1.12 flake8 pytest
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -42,16 +40,16 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |-
-        cd datasource_service
-        poetry run pytest
+        cd merradata_service
+        pytest test/test_merradata_service.py
 
     - name: build and push docker image
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
-        image: vinayakasgadag/decoders-datasource
+        image: vinayakasgadag/dcoders-merradata
         tags: milestone3
         registry: docker.io
-        directory: datasource_service
-        dockerfile: datasource_service/Dockerfile
+        directory: merradata_service
+        dockerfile: merradata_service/Dockerfile
         username: vinayakasgadag
         password: 9b770f15-c13f-41cd-a4df-6a1a175141a6
